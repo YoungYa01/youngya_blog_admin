@@ -3,11 +3,10 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { ConfigProvider } from '@arco-design/web-react';
+import { ConfigProvider, Message } from '@arco-design/web-react';
 import zhCN from '@arco-design/web-react/es/locale/zh-CN';
 import enUS from '@arco-design/web-react/es/locale/en-US';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import axios from 'axios';
 import rootReducer from './store';
 import PageLayout from './layout';
 import { GlobalContext } from './context';
@@ -15,7 +14,8 @@ import Login from './pages/login';
 import checkLogin from './utils/checkLogin';
 import changeTheme from './utils/changeTheme';
 import useStorage from './utils/useStorage';
-import './mock';
+import { adminInfoReq } from '@/api/user';
+import { generatePermission } from '@/routes';
 
 const store = createStore(rootReducer);
 
@@ -37,13 +37,24 @@ function Index() {
   function fetchUserInfo() {
     store.dispatch({
       type: 'update-userInfo',
-      payload: { userLoading: true },
+      payload: { userLoading: true }
     });
-    axios.get('/api/user/userInfo').then((res) => {
-      store.dispatch({
-        type: 'update-userInfo',
-        payload: { userInfo: res.data, userLoading: false },
-      });
+
+    adminInfoReq()
+      .then(resp => {
+        store.dispatch({
+          type: 'update-userInfo',
+          payload: {
+            userInfo: {
+              ...resp.data.data.attributes,
+              avatar: import.meta.env.VITE_BASE_URL + resp.data.data.attributes.avatar.data.attributes.url,
+              permissions: generatePermission('admin')
+            },
+            userLoading: false
+          }
+        });
+      }).catch(error => {
+      Message.error(error.response.data.error.message);
     });
   }
 
@@ -63,7 +74,7 @@ function Index() {
     lang,
     setLang,
     theme,
-    setTheme,
+    setTheme
   };
 
   return (
@@ -72,14 +83,14 @@ function Index() {
         locale={getArcoLocale()}
         componentConfig={{
           Card: {
-            bordered: false,
+            bordered: false
           },
           List: {
-            bordered: false,
+            bordered: false
           },
           Table: {
-            border: false,
-          },
+            border: false
+          }
         }}
       >
         <Provider store={store}>
@@ -94,5 +105,9 @@ function Index() {
     </BrowserRouter>
   );
 }
+
+console.log(import.meta.env.VITE_ENV);
+console.log(import.meta.env.VITE_BASE_URL);
+console.log(import.meta.env.VITE_APP_TITLE);
 
 ReactDOM.render(<Index />, document.getElementById('root'));

@@ -3,7 +3,10 @@ import { Carousel } from '@arco-design/web-react';
 import useLocale from '@/utils/useLocale';
 import locale from './locale';
 import styles from './style/index.module.less';
-
+/**
+ *  登录页banner
+ * @returns React.ReactNode banner
+ */
 export default function LoginBanner() {
   const t = useLocale(locale);
   const data = [

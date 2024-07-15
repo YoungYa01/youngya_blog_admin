@@ -8,7 +8,7 @@ import {
   Menu,
   Divider,
   Message,
-  Button,
+  Button, Image
 } from '@arco-design/web-react';
 import {
   IconLanguage,
@@ -27,7 +27,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { GlobalState } from '@/store';
 import { GlobalContext } from '@/context';
 import useLocale from '@/utils/useLocale';
-import Logo from '@/assets/logo.svg';
+import Logo from '@/assets/Y.png';
 import MessageBox from '@/components/MessageBox';
 import IconButton from './IconButton';
 import Settings from '../Settings';
@@ -139,8 +139,8 @@ function Navbar({ show }: { show: boolean }) {
     <div className={styles.navbar}>
       <div className={styles.left}>
         <div className={styles.logo}>
-          <Logo />
-          <div className={styles['logo-name']}>Arco Pro</div>
+          <img src={Logo} alt="logo"></img>
+          <div className={styles['logo-name']}>Admin</div>
         </div>
       </div>
       <ul className={styles.right}>

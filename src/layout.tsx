@@ -7,6 +7,7 @@ import {
   IconTag,
   IconMenuFold,
   IconMenuUnfold,
+  IconFontColors, IconBook
 } from '@arco-design/web-react/icon';
 import { useSelector } from 'react-redux';
 import qs from 'query-string';
@@ -31,8 +32,12 @@ function getIconFromKey(key) {
   switch (key) {
     case 'dashboard':
       return <IconDashboard className={styles.icon} />;
-    case 'example':
+    case 'dashboard/workplace':
       return <IconTag className={styles.icon} />;
+    case 'article':
+      return <IconFontColors className={styles.icon} />;
+    case 'articles':
+      return <IconBook className={styles.icon} />;
     default:
       return <div className={styles['icon-empty']} />;
   }
@@ -41,6 +46,7 @@ function getIconFromKey(key) {
 function getFlattenRoutes(routes) {
   const mod = import.meta.glob('./pages/**/[a-z[]*.tsx');
   const res = [];
+
   function travel(_routes) {
     _routes.forEach((route) => {
       if (route.key && !route.children) {
@@ -51,6 +57,7 @@ function getFlattenRoutes(routes) {
       }
     });
   }
+
   travel(routes);
   return res;
 }
@@ -184,7 +191,7 @@ function PageLayout() {
     <Layout className={styles.layout}>
       <div
         className={cs(styles['layout-navbar'], {
-          [styles['layout-navbar-hidden']]: !showNavbar,
+          [styles['layout-navbar-hidden']]: !showNavbar
         })}
       >
         <Navbar show={showNavbar} />

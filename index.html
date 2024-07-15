@@ -1,18 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link
-      rel="shortcut icon"
-      type="image/x-icon"
-      href="https://unpkg.byted-static.com/latest/byted/arco-config/assets/favicon.ico"
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Arco Design Pro - 开箱即用的中台前端/设计解决方案</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="shortcut icon" type="image/x-icon"
+    href="https://unpkg.byted-static.com/latest/byted/arco-config/assets/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>YoungYa | 博客后台</title>
+  <style>
+    html,
+    body,
+    #app {
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    #loader-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999999;
+
+      .loader {
+        width: 50px;
+        aspect-ratio: 1;
+        display: grid;
+        position: relative;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(2);
+      }
+
+      .loader::before,
+      .loader::after {
+        content: "";
+        grid-area: 1/1;
+        --c: no-repeat radial-gradient(farthest-side, #25b09b 92%, #0000);
+        background: var(--c) 50% 0,
+          var(--c) 50% 100%,
+          var(--c) 100% 50%,
+          var(--c) 0 50%;
+        background-size: 12px 12px;
+        animation: l12 1s infinite;
+      }
+
+      .loader::before {
+        margin: 4px;
+        filter: hue-rotate(45deg);
+        background-size: 8px 8px;
+        animation-timing-function: linear
+      }
+
+      .load_title {
+        width: 200px;
+        text-align: center;
+        position: relative;
+        left: 50%;
+        top: 50%;
+        color: #25b09b;
+        transform: translate(-30%);
+
+        .text-loader {
+          --w: 10ch;
+          font-weight: bold;
+          font-family: monospace;
+          font-size: 30px;
+          line-height: 1.4em;
+          letter-spacing: var(--w);
+          width: var(--w);
+          overflow: hidden;
+          white-space: nowrap;
+          color: #0000;
+          text-shadow: calc(0 * var(--w)) 0 #000, calc(-1 * var(--w)) 0 #000, calc(-2 * var(--w)) 0 #000, calc(-3 * var(--w)) 0 #000, calc(-4 * var(--w)) 0 #000,
+            calc(-5 * var(--w)) 0 #000, calc(-6 * var(--w)) 0 #000, calc(-7 * var(--w)) 0 #000, calc(-8 * var(--w)) 0 #000, calc(-9 * var(--w)) 0 #000;
+          animation: l20 2s infinite linear;
+
+          &:before {
+            content: "Loading...";
+          }
+        }
+      }
+    }
+
+    @keyframes l20 {
+      9.09% {
+        text-shadow: calc(0 * var(--w)) -10px #000, calc(-1 * var(--w)) 0 #000, calc(-2 * var(--w)) 0 #000, calc(-3 * var(--w)) 0 #000, calc(-4 * var(--w)) 0 #000,
+          calc(-5 * var(--w)) 0 #000, calc(-6 * var(--w)) 0 #000, calc(-7 * var(--w)) 0 #000, calc(-8 * var(--w)) 0 #000, calc(-9 * var(--w)) 0 #000
+      }
+
+      18.18% {
+        text-shadow: calc(0 * var(--w)) 0 #000, calc(-1 * var(--w)) -10px #000, calc(-2 * var(--w)) 0 #000, calc(-3 * var(--w)) 0 #000, calc(-4 * var(--w)) 0 #000,
+          calc(-5 * var(--w)) 0 #000, calc(-6 * var(--w)) 0 #000, calc(-7 * var(--w)) 0 #000, calc(-8 * var(--w)) 0 #000, calc(-9 * var(--w)) 0 #000
+      }
+
+      27.27% {
+        text-shadow: calc(0 * var(--w)) 0 #000, calc(-1 * var(--w)) 0 #000, calc(-2 * var(--w)) -10px #000, calc(-3 * var(--w)) 0 #000, calc(-4 * var(--w)) 0 #000,
+          calc(-5 * var(--w)) 0 #000, calc(-6 * var(--w)) 0 #000, calc(-7 * var(--w)) 0 #000, calc(-8 * var(--w)) 0 #000, calc(-9 * var(--w)) 0 #000
+      }
+
+      36.36% {
+        text-shadow: calc(0 * var(--w)) 0 #000, calc(-1 * var(--w)) 0 #000, calc(-2 * var(--w)) 0 #000, calc(-3 * var(--w)) -10px #000, calc(-4 * var(--w)) 0 #000,
+          calc(-5 * var(--w)) 0 #000, calc(-6 * var(--w)) 0 #000, calc(-7 * var(--w)) 0 #000, calc(-8 * var(--w)) 0 #000, calc(-9 * var(--w)) 0 #000
+      }
+
+      45.45% {
+        text-shadow: calc(0 * var(--w)) 0 #000, calc(-1 * var(--w)) 0 #000, calc(-2 * var(--w)) 0 #000, calc(-3 * var(--w)) 0 #000, calc(-4 * var(--w)) -10px #000,
+          calc(-5 * var(--w)) 0 #000, calc(-6 * var(--w)) 0 #000, calc(-7 * var(--w)) 0 #000, calc(-8 * var(--w)) 0 #000, calc(-9 * var(--w)) 0 #000
+      }
+
+      54.54% {
+        text-shadow: calc(0 * var(--w)) 0 #000, calc(-1 * var(--w)) 0 #000, calc(-2 * var(--w)) 0 #000, calc(-3 * var(--w)) 0 #000, calc(-4 * var(--w)) 0 #000,
+          calc(-5 * var(--w)) -10px #000, calc(-6 * var(--w)) 0 #000, calc(-7 * var(--w)) 0 #000, calc(-8 * var(--w)) 0 #000, calc(-9 * var(--w)) 0 #000
+      }
+
+      63.63% {
+        text-shadow: calc(0 * var(--w)) 0 #000, calc(-1 * var(--w)) 0 #000, calc(-2 * var(--w)) 0 #000, calc(-3 * var(--w)) 0 #000, calc(-4 * var(--w)) 0 #000,
+          calc(-5 * var(--w)) 0 #000, calc(-6 * var(--w)) -10px #000, calc(-7 * var(--w)) 0 #000, calc(-8 * var(--w)) 0 #000, calc(-9 * var(--w)) 0 #000
+      }
+
+      72.72% {
+        text-shadow: calc(0 * var(--w)) 0 #000, calc(-1 * var(--w)) 0 #000, calc(-2 * var(--w)) 0 #000, calc(-3 * var(--w)) 0 #000, calc(-4 * var(--w)) 0 #000,
+          calc(-5 * var(--w)) 0 #000, calc(-6 * var(--w)) 0 #000, calc(-7 * var(--w)) -10px #000, calc(-8 * var(--w)) 0 #000, calc(-9 * var(--w)) 0 #000
+      }
+
+      81.81% {
+        text-shadow: calc(0 * var(--w)) 0 #000, calc(-1 * var(--w)) 0 #000, calc(-2 * var(--w)) 0 #000, calc(-3 * var(--w)) 0 #000, calc(-4 * var(--w)) 0 #000,
+          calc(-5 * var(--w)) 0 #000, calc(-6 * var(--w)) 0 #000, calc(-7 * var(--w)) 0 #000, calc(-8 * var(--w)) -10px #000, calc(-9 * var(--w)) 0 #000
+      }
+
+      90.90% {
+        text-shadow: calc(0 * var(--w)) 0 #000, calc(-1 * var(--w)) 0 #000, calc(-2 * var(--w)) 0 #000, calc(-3 * var(--w)) 0 #000, calc(-4 * var(--w)) 0 #000,
+          calc(-5 * var(--w)) 0 #000, calc(-6 * var(--w)) 0 #000, calc(-7 * var(--w)) 0 #000, calc(-8 * var(--w)) 0 #000, calc(-9 * var(--w)) -10px #000
+      }
+    }
+
+
+    @keyframes l12 {
+      100% {
+        transform: rotate(.5turn)
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root">
+    <div id="loader-wrapper">
+      <div class="loader"></div>
+      <div class="load_title">
+        <div class="text-loader"></div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

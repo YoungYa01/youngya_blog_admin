@@ -17,6 +17,7 @@ import useLocale from '@/utils/useLocale';
 import locale from './locale';
 import styles from './style/shortcuts.module.less';
 
+
 function Shortcuts() {
   const t = useLocale(locale);
 

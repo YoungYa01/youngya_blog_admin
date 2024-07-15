@@ -2,6 +2,9 @@ const i18n = {
   'en-US': {
     'menu.dashboard': 'Dashboard',
     'menu.dashboard.workplace': 'Workplace',
+    'menu.article':'Article',
+    'menu.article.article':'Article',
+    'menu.article.edit':'Edit Article',
     'menu.user.info': 'User Info',
     'menu.user.setting': 'User Setting',
     'menu.user.switchRoles': 'Switch Roles',
@@ -40,6 +43,9 @@ const i18n = {
   'zh-CN': {
     'menu.dashboard': '仪表盘',
     'menu.dashboard.workplace': '工作台',
+    'menu.article':'文章',
+    'menu.article.article':'文章',
+    'menu.article.edit':'编辑文章',
     'menu.user.info': '用户信息',
     'menu.user.setting': '用户设置',
     'menu.user.switchRoles': '切换角色',

@@ -4,16 +4,18 @@ import {
   Checkbox,
   Link,
   Button,
-  Space,
+  Space, Message
 } from '@arco-design/web-react';
 import { FormInstance } from '@arco-design/web-react/es/Form';
 import { IconLock, IconUser } from '@arco-design/web-react/icon';
 import React, { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import useStorage from '@/utils/useStorage';
 import useLocale from '@/utils/useLocale';
 import locale from './locale';
 import styles from './style/index.module.less';
+import { loginReq } from '@/api/public';
+import { Simulate } from 'react-dom/test-utils';
+import { setUserInfo, setUserState, setUserToken } from '@/utils/localstorage';
 
 export default function LoginForm() {
   const formRef = useRef<FormInstance>();
@@ -26,7 +28,7 @@ export default function LoginForm() {
 
   const [rememberPassword, setRememberPassword] = useState(!!loginParams);
 
-  function afterLoginSuccess(params) {
+  function afterLoginSuccess(params, token, user) {
     // 记住密码
     if (rememberPassword) {
       setLoginParams(JSON.stringify(params));
@@ -34,7 +36,12 @@ export default function LoginForm() {
       removeLoginParams();
     }
     // 记录登录状态
-    localStorage.setItem('userStatus', 'login');
+    setUserState('login');
+    // 记录Token
+    setUserToken(token);
+    // 记录User
+    setUserInfo(user);
+    localStorage.setItem('userRole','admin')
     // 跳转首页
     window.location.href = '/';
   }
@@ -42,15 +49,15 @@ export default function LoginForm() {
   function login(params) {
     setErrorMessage('');
     setLoading(true);
-    axios
-      .post('/api/user/login', params)
-      .then((res) => {
-        const { status, msg } = res.data;
-        if (status === 'ok') {
-          afterLoginSuccess(params);
-        } else {
-          setErrorMessage(msg || t['login.form.login.errMsg']);
-        }
+    loginReq(params)
+      .then((resp) => {
+        console.log(resp);
+        const { data: { jwt, user } } = resp;
+        afterLoginSuccess(params, jwt, user);
+      })
+      .catch(error => {
+        Message.error(error.response.data.error.message);
+        setErrorMessage(error.response.data.error.message || t['login.form.login.errMsg']);
       })
       .finally(() => {
         setLoading(false);
@@ -58,7 +65,9 @@ export default function LoginForm() {
   }
 
   function onSubmitClick() {
+
     formRef.current.validate().then((values) => {
+      console.log(values);
       login(values);
     });
   }
@@ -84,10 +93,10 @@ export default function LoginForm() {
         className={styles['login-form']}
         layout="vertical"
         ref={formRef}
-        initialValues={{ userName: 'admin', password: 'admin' }}
+        initialValues={{ identifier: 'yonghu', password: 'Yonghu123' }}
       >
         <Form.Item
-          field="userName"
+          field="identifier"
           rules={[{ required: true, message: t['login.form.userName.errMsg'] }]}
         >
           <Input
@@ -111,18 +120,18 @@ export default function LoginForm() {
             <Checkbox checked={rememberPassword} onChange={setRememberPassword}>
               {t['login.form.rememberPassword']}
             </Checkbox>
-            <Link>{t['login.form.forgetPassword']}</Link>
+            {/*<Link>{t['login.form.forgetPassword']}</Link>*/}
           </div>
           <Button type="primary" long onClick={onSubmitClick} loading={loading}>
             {t['login.form.login']}
           </Button>
-          <Button
-            type="text"
-            long
-            className={styles['login-form-register-btn']}
-          >
-            {t['login.form.register']}
-          </Button>
+          {/*<Button*/}
+          {/*  type="text"*/}
+          {/*  long*/}
+          {/*  className={styles['login-form-register-btn']}*/}
+          {/*>*/}
+          {/*  {t['login.form.register']}*/}
+          {/*</Button>*/}
         </Space>
       </Form>
     </div>
