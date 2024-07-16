@@ -8,7 +8,7 @@ import {
   Grid,
   Space,
   Button,
-  Message, Popconfirm
+  Message, Popconfirm, Switch
 } from '@arco-design/web-react';
 import { FormInstance } from '@arco-design/web-react/es/Form';
 import useLocale from '@/utils/useLocale';
@@ -18,6 +18,7 @@ import RichText from '@/components/RichText';
 import { useHistory } from 'react-router';
 import { IconStar } from '@arco-design/web-react/icon';
 import { articleCreateReq, articleUpdateReq, classificationsReq, tagsReq } from '@/api/article';
+import MarkdownText from '@/components/MarkdownText';
 
 
 const SearchForm = () => {
@@ -34,7 +35,8 @@ const SearchForm = () => {
       titleZH: string,
       titleEN: string,
       tags: Array<{ name: string }>,
-      classifications: Array<{ title: string }>
+      classifications: Array<{ title: string }>,
+      isMarkdown: boolean
     }
   } = history.location.state;
 
@@ -60,6 +62,8 @@ const SearchForm = () => {
   }>>([]);
   const [respTags, setRespTags] = useState([]);
   const [respClssifications, setClassificationsResponseData] = useState([]);
+
+  const [isMd, setIsMd] = useState<boolean>(data?.isMarkdown || false);
 
   useEffect(() => {
     tagsReq()
@@ -161,7 +165,7 @@ const SearchForm = () => {
           {/*  {t['groupForm.title.video']}*/}
           {/*</Typography.Title> */}
           <Grid.Row gutter={80}>
-            <Grid.Col span={12}>
+            <Grid.Col span={10}>
               <Form.Item
                 label={t['edit.form.titleZH']}
                 field="titleZH"
@@ -173,7 +177,7 @@ const SearchForm = () => {
                 />
               </Form.Item>
             </Grid.Col>
-            <Grid.Col span={12}>
+            <Grid.Col span={10}>
               <Form.Item
                 label={t['edit.form.titleEN']}
                 field="titleEN"
@@ -187,7 +191,7 @@ const SearchForm = () => {
             </Grid.Col>
           </Grid.Row>
           <Grid.Row gutter={80}>
-            <Grid.Col span={12}>
+            <Grid.Col span={10}>
               <Form.Item
                 label={t['edit.form.tags']}
                 field="tags"
@@ -216,7 +220,7 @@ const SearchForm = () => {
                 </Select>
               </Form.Item>
             </Grid.Col>
-            <Grid.Col span={12}>
+            <Grid.Col span={10}>
               <Form.Item
                 label={t['edit.form.classfications']}
                 field="classifications"
@@ -245,11 +249,28 @@ const SearchForm = () => {
                 </Select>
               </Form.Item>
             </Grid.Col>
+            <Grid.Col span={4}>
+              <Form.Item
+                field="type"
+              >
+                <Switch
+                  checkedText={t['edit.form.content.type.richText']}
+                  uncheckedText={t['edit.form.content.type.markdown']}
+                  type="round"
+                  checked={isMd}
+                  onChange={(checked) => setIsMd(checked)}
+                />
+              </Form.Item>
+            </Grid.Col>
           </Grid.Row>
         </Card>
       </Form>
 
-      <RichText textValue={textValue} setTextValue={setTextValue}></RichText>
+      {
+        isMd ?
+          <MarkdownText textValue={textValue} setTextValue={setTextValue} />
+          : <RichText textValue={textValue} setTextValue={setTextValue}></RichText>
+      }
       <div className={styles.actions}>
         <Space>
           <Button onClick={() => history.goBack()} size="large">

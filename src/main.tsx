@@ -16,6 +16,7 @@ import changeTheme from './utils/changeTheme';
 import useStorage from './utils/useStorage';
 import { adminInfoReq } from '@/api/user';
 import { generatePermission } from '@/routes';
+import Home from './pages/home';
 
 const store = createStore(rootReducer);
 
@@ -96,6 +97,7 @@ function Index() {
         <Provider store={store}>
           <GlobalContext.Provider value={contextValue}>
             <Switch>
+              <Route path="/main" component={Home} />
               <Route path="/login" component={Login} />
               <Route path="/" component={PageLayout} />
             </Switch>

@@ -15,7 +15,7 @@ import locale from './locale';
 import styles from './style/index.module.less';
 import { loginReq } from '@/api/public';
 import { Simulate } from 'react-dom/test-utils';
-import { setUserInfo, setUserState, setUserToken } from '@/utils/localstorage';
+import { getUserToken, setUserInfo, setUserState, setUserToken } from '@/utils/localstorage';
 
 export default function LoginForm() {
   const formRef = useRef<FormInstance>();
@@ -41,7 +41,7 @@ export default function LoginForm() {
     setUserToken(token);
     // 记录User
     setUserInfo(user);
-    localStorage.setItem('userRole','admin')
+    localStorage.setItem('userRole', 'admin');
     // 跳转首页
     window.location.href = '/';
   }
@@ -67,7 +67,6 @@ export default function LoginForm() {
   function onSubmitClick() {
 
     formRef.current.validate().then((values) => {
-      console.log(values);
       login(values);
     });
   }
@@ -81,6 +80,13 @@ export default function LoginForm() {
       formRef.current.setFieldsValue(parseParams);
     }
   }, [loginParams]);
+
+  useEffect(() => {
+    const token = getUserToken();
+    if (token) {
+      window.location.href = '/';
+    }
+  }, []);
 
   return (
     <div className={styles['login-form-wrapper']}>

@@ -5,6 +5,7 @@ import LoginForm from './form';
 import LoginBanner from './banner';
 import styles from './style/index.module.less';
 import { Image } from '@arco-design/web-react';
+import { getUserToken } from '@/utils/localstorage';
 
 /**
  *  登录页

@@ -37,6 +37,22 @@ export const routes: IRoute[] = [
         ignore: true
       },
     ]
+  },
+  {
+    name: 'menu.classify',
+    key: 'classify',
+    children: [
+      {
+        name: 'menu.classify.tags',
+        key: 'classify/tags',
+        // ignore: true
+      },
+      {
+        name: 'menu.classify.classification',
+        key: 'classify/classification',
+        // ignore: true
+      },
+    ]
   }
 ];
 

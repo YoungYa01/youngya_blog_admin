@@ -13,7 +13,9 @@ const i18n = {
     'groupForm.reset': 'Reset',
     'groupForm.goBack': 'Go Back',
     'groupForm.confirm.content': 'Are you sure you want to delete?',
-    'groupForm.submitSuccess': 'Submit Success'
+    'groupForm.submitSuccess': 'Submit Success',
+    'edit.form.content.type.richText':'Rich Text',
+    'edit.form.content.type.markdown':'Markdown Editor',
   },
   'zh-CN': {
     'edit.form.titleZH': '文章名称',
@@ -29,7 +31,9 @@ const i18n = {
     'groupForm.reset': '重置',
     'groupForm.goBack': '返回',
     'groupForm.confirm.content': '你确定要清空吗?',
-    'groupForm.submitSuccess': '提交成功'
+    'groupForm.submitSuccess': '提交成功',
+    'edit.form.content.type.richText':'富文本编辑器',
+    'edit.form.content.type.markdown':'Markdown编辑器',
   }
 };
 

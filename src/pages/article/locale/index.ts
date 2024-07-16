@@ -2,6 +2,7 @@ const i18n = {
   'en-US': {
     'menu.list': 'List',
     'menu.list.card': 'Card List',
+    'search.placeholder': 'Please Input Article Name',
     'cardList.tab.title.all': 'All',
     'cardList.tab.title.quality': 'Content quality',
     'cardList.tab.title.service': 'Service opening',
@@ -33,6 +34,7 @@ const i18n = {
   'zh-CN': {
     'menu.list': '列表页',
     'menu.list.card': '卡片列表',
+    'search.placeholder': '请输入文章名称',
     'cardList.tab.title.all': '全部',
     'cardList.tab.title.quality': '内容质检',
     'cardList.tab.title.service': '服务开通',

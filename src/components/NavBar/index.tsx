@@ -21,7 +21,7 @@ import {
   IconExperiment,
   IconDashboard,
   IconInteraction,
-  IconTag,
+  IconTag
 } from '@arco-design/web-react/icon';
 import { useSelector, useDispatch } from 'react-redux';
 import { GlobalState } from '@/store';
@@ -35,6 +35,7 @@ import styles from './style/index.module.less';
 import defaultLocale from '@/locale';
 import useStorage from '@/utils/useStorage';
 import { generatePermission } from '@/routes';
+import { removeUserToken } from '@/utils/localstorage';
 
 function Navbar({ show }: { show: boolean }) {
   const t = useLocale();
@@ -48,6 +49,7 @@ function Navbar({ show }: { show: boolean }) {
 
   function logout() {
     setUserStatus('logout');
+    removeUserToken();
     window.location.href = '/login';
   }
 
@@ -65,9 +67,9 @@ function Navbar({ show }: { show: boolean }) {
       payload: {
         userInfo: {
           ...userInfo,
-          permissions: generatePermission(role),
-        },
-      },
+          permissions: generatePermission(role)
+        }
+      }
     });
   }, [role]);
 
@@ -138,7 +140,7 @@ function Navbar({ show }: { show: boolean }) {
   return (
     <div className={styles.navbar}>
       <div className={styles.left}>
-        <div className={styles.logo}>
+        <div className={styles.logo} onClick={() => window.location.href = '/main'}>
           <img src={Logo} alt="logo"></img>
           <div className={styles['logo-name']}>Admin</div>
         </div>
@@ -155,13 +157,13 @@ function Navbar({ show }: { show: boolean }) {
             triggerElement={<IconButton icon={<IconLanguage />} />}
             options={[
               { label: '中文', value: 'zh-CN' },
-              { label: 'English', value: 'en-US' },
+              { label: 'English', value: 'en-US' }
             ]}
             value={lang}
             triggerProps={{
               autoAlignPopupWidth: false,
               autoAlignPopupMinWidth: true,
-              position: 'br',
+              position: 'br'
             }}
             trigger="hover"
             onChange={(value) => {

@@ -7,7 +7,7 @@ import {
   IconTag,
   IconMenuFold,
   IconMenuUnfold,
-  IconFontColors, IconBook
+  IconFontColors, IconBook, IconTags, IconStorage, IconMindMapping
 } from '@arco-design/web-react/icon';
 import { useSelector } from 'react-redux';
 import qs from 'query-string';
@@ -38,6 +38,12 @@ function getIconFromKey(key) {
       return <IconFontColors className={styles.icon} />;
     case 'articles':
       return <IconBook className={styles.icon} />;
+    case 'classify':
+      return <IconMindMapping className={styles.icon} />;
+    case 'classify/tags':
+      return <IconTags className={styles.icon} />;
+    case 'classify/classification':
+      return <IconStorage className={styles.icon} />;
     default:
       return <div className={styles['icon-empty']} />;
   }

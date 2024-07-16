@@ -1,0 +1,54 @@
+.root {
+  width: 100%;
+  text-align: center;
+
+  .title {
+    margin-top: 50px;
+    font-size: 30px;
+    position: relative;
+    font-weight: bold;
+
+    &:hover &::after{
+      border-color: #25b09b;
+    }
+
+    &::after {
+      content: "";
+      width: 200px;
+      border-bottom: 2px solid #ccc;
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      transform: translate(-50%, 0);
+      animation: borderChange 5s linear infinite;
+    }
+  }
+
+  .about_content {
+    font-size: 18px;
+
+    .titleEN {
+      font-size: 20px;
+    }
+
+    .hight_light {
+      color: deepskyblue;
+    }
+
+    .hight_weight {
+      font-weight: bold;
+    }
+  }
+}
+
+@keyframes borderChange {
+  0%{
+    width: 100px;
+  }
+  50%{
+    width: 200px;
+  }
+  100%{
+    width: 100px;
+  }
+}

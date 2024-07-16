@@ -2,8 +2,13 @@ const i18n = {
   'en-US': {
     'menu.dashboard': 'Dashboard',
     'menu.dashboard.workplace': 'Workplace',
-    'menu.article':'Article',
+    'menu.article':'Content Admin',
     'menu.article.article':'Article',
+    'menu.classify':'Classification Management',
+    'menu.classify.tags':'Tags',
+    'menu.classify.classification':'Article Classification',
+
+
     'menu.article.edit':'Edit Article',
     'menu.user.info': 'User Info',
     'menu.user.setting': 'User Setting',
@@ -43,8 +48,12 @@ const i18n = {
   'zh-CN': {
     'menu.dashboard': '仪表盘',
     'menu.dashboard.workplace': '工作台',
-    'menu.article':'文章',
+    'menu.article':'内容管理',
     'menu.article.article':'文章',
+    'menu.classify':'分类管理',
+    'menu.classify.tags':'标签',
+    'menu.classify.classification':'文章分类',
+
     'menu.article.edit':'编辑文章',
     'menu.user.info': '用户信息',
     'menu.user.setting': '用户设置',

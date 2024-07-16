@@ -41,7 +41,7 @@ export default function Article() {
       .finally(() => {
         setTimeout(() => {
           setLoading(false);
-        }, 3000);
+        }, 666);
       });
   };
 
@@ -64,7 +64,6 @@ export default function Article() {
 
   return (
     <Card>
-      <Title heading={6}>{t['menu.list.card']}</Title>
       <Tabs
         activeTab={activeKey}
         type="rounded"
@@ -72,15 +71,15 @@ export default function Article() {
         extra={
           <Input.Search
             style={{ width: '240px' }}
-            placeholder={t[`cardList.tab.${activeKey}.placeholder`]}
+            placeholder={t['search.placeholder']}
             onSearch={onSearch}
           />
         }
       >
-        <Tabs.TabPane key="all" title={t['cardList.tab.title.all']} />
-        <Tabs.TabPane key="quality" title={t['cardList.tab.title.quality']} />
-        <Tabs.TabPane key="service" title={t['cardList.tab.title.service']} />
-        <Tabs.TabPane key="rules" title={t['cardList.tab.title.rules']} />
+        {/*<Tabs.TabPane key="all" title={t['cardList.tab.title.all']} />*/}
+        {/*<Tabs.TabPane key="quality" title={t['cardList.tab.title.quality']} />*/}
+        {/*<Tabs.TabPane key="service" title={t['cardList.tab.title.service']} />*/}
+        {/*<Tabs.TabPane key="rules" title={t['cardList.tab.title.rules']} />*/}
       </Tabs>
       <div className={styles.container}>
         <div>

@@ -83,30 +83,6 @@ function CardBlock(props) {
   };
 
 
-  const getContent = () => {
-    if (loading) {
-      return (
-        <Skeleton
-          text={{ rows: type !== 'quality' ? 3 : 2 }}
-          animation
-          className={styles['card-block-skeleton']}
-        />
-      );
-    }
-    if (type !== 'quality') {
-      return <Paragraph>{card.description}</Paragraph>;
-    }
-    return (
-      <Descriptions
-        column={2}
-        data={[
-          { label: '待质检数', value: card.qualityCount },
-          { label: '积压时长', value: `${card.duration}s` },
-          { label: '待抽检数', value: card.randomCount }
-        ]}
-      />
-    );
-  };
 
   const TagsList = (props) => (
     <div style={{marginRight:20}}>
@@ -222,7 +198,6 @@ function CardBlock(props) {
             : <div className={styles.time}>{card.createdAt}</div>
         }
         {getButtonGroup()}
-
       </div>
     </Card>
   )
