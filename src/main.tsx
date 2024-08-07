@@ -18,6 +18,9 @@ import { adminInfoReq } from '@/api/user';
 import { generatePermission } from '@/routes';
 import Home from './pages/home';
 import { removeUserToken } from '@/utils/localstorage';
+import Blog from '@/pages/Blog';
+import Articles from '@/pages/Blog/pages/Articles';
+import Regist from '@/pages/regist';
 
 const store = createStore(rootReducer);
 
@@ -78,6 +81,9 @@ function Index() {
       if (window.location.pathname.includes('main')) {
         return;
       }
+      if (window.location.pathname.includes('blog')) {
+        return;
+      }
       window.location.pathname = '/login';
     }
   }, []);
@@ -113,7 +119,9 @@ function Index() {
           <GlobalContext.Provider value={contextValue}>
             <Switch>
               <Route path="/main" component={Home} />
+              <Route path="/blog" component={Blog} />
               <Route path="/login" component={Login} />
+              <Route path="/regist" component={Regist} />
               <Route path="/" component={PageLayout} />
             </Switch>
           </GlobalContext.Provider>

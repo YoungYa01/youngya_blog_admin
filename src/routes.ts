@@ -52,11 +52,6 @@ export const routes: IRoute[] = [
         key: 'classify/tags',
         // ignore: true
       },
-      {
-        name: 'menu.classify.classification',
-        key: 'classify/classification',
-        // ignore: true
-      },
     ]
   },
   {

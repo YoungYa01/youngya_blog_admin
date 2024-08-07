@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { MdEditor, Themes } from 'md-editor-rt';
 import 'md-editor-rt/lib/style.css';
 import { GlobalContext } from '@/context';
@@ -6,15 +6,17 @@ import { config } from 'md-editor-rt';
 import { uploadImgReq } from '@/api/public';
 import { foldGutter } from '@codemirror/language';
 import { lineNumbers } from '@codemirror/view';
-config({
-  codeMirrorExtensions(_theme, extensions) {
-    return [...extensions, lineNumbers(), foldGutter()];
-  }
-});
+
+// config({
+//   codeMirrorExtensions(_theme, extensions) {
+//     return [...extensions, lineNumbers(), foldGutter()];
+//   }
+// });
 
 const MarkdownText = (props): JSX.Element => {
+  console.log(props);
   const { textValue, setTextValue } = props;
-  const [value, setValue] = React.useState(textValue || '**Hello world!!!**');
+  const [value, setValue] = useState( textValue || '**Hello world!!!**');
   const { theme } = useContext(GlobalContext);
 
   const onUploadImg = async (files, callback) => {

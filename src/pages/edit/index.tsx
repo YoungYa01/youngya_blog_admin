@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  Typography,
   Card,
   Form,
   Select,
@@ -8,16 +7,18 @@ import {
   Grid,
   Space,
   Button,
-  Message, Popconfirm, Switch
+  Message,
+  Popconfirm,
+  Switch
 } from '@arco-design/web-react';
 import { FormInstance } from '@arco-design/web-react/es/Form';
 import useLocale from '@/utils/useLocale';
-import locale from './locale';
+import locale from './local';
 import styles from '@/pages/edit/style/index.module.less';
 import RichText from '@/components/RichText';
 import { useHistory } from 'react-router';
 import { IconStar } from '@arco-design/web-react/icon';
-import { articleCreateReq, articleUpdateReq, classificationsReq, tagsReq } from '@/api/article';
+import { articleCreateReq, articleUpdateReq, tagsReq } from '@/api/article';
 import MarkdownText from '@/components/MarkdownText';
 import { EditStateType } from '@/types';
 
@@ -46,24 +47,12 @@ const SearchForm = () => {
       color: string
     }
   }>>([]);
-  const [classifications, setClassifications] = useState<Array<{
-    label: string,
-    value: string,
-    extra: {
-      id: number,
-      name: string,
-      color: string
-    }
-  }>>([]);
-  const [respTags, setRespTags] = useState([]);
-  const [respClssifications, setClassificationsResponseData] = useState([]);
 
   const [isMd, setIsMd] = useState<boolean>(true);
 
   useEffect(() => {
     tagsReq(paginate)
       .then(resp => {
-        setRespTags(resp.data.data);
         setTags(resp.data.data.map(item => (
           {
             label: item.name,
@@ -73,20 +62,6 @@ const SearchForm = () => {
         )));
       });
   }, []);
-  // useEffect(() => {
-    // classificationsReq()
-    //   .then(resp => {
-    //     setClassificationsResponseData(resp.data.data);
-    //     const data = resp.data.data.map(item => (
-    //       {
-    //         label: item.attributes.title,
-    //         value: item.attributes.title,
-    //         extra: { ...item.attributes }
-    //       }
-    //     ));
-    //     setClassifications(data);
-    //   });
-  // }, []);
 
 
   function handleSubmit() {
@@ -95,7 +70,6 @@ const SearchForm = () => {
     if (type === 'edit') {
       articleUpdateReq(data.id, {
         tagList: res.tags,
-        // classifications: respClssifications.filter(item => res.classifications.includes(item.attributes.title)),
         content: textValue,
         titleZH: res.titleZH,
         titleEN: res.titleEN
@@ -112,7 +86,6 @@ const SearchForm = () => {
     } else {
       articleCreateReq({
         tagList: res.tags,
-        // classifications: respClssifications.filter(item => res.classifications.includes(item.attributes.title)),
         content: textValue,
         titleZH: res.titleZH,
         titleEN: res.titleEN
@@ -152,15 +125,11 @@ const SearchForm = () => {
     <div className={styles.container}>
       <Form layout="horizontal" ref={formRef} className={styles['form-group']}>
         <Card>
-          {/*<Typography.Title heading={6}>*/}
-          {/*  {t['groupForm.title.video']}*/}
-          {/*</Typography.Title> */}
           <Grid.Row gutter={80}>
             <Grid.Col span={10}>
               <Form.Item
                 label={t['edit.form.titleZH']}
                 field="titleZH"
-                /*initialValue={'custom'}*/
               >
                 <Input placeholder={
                   t['edit.form.placeholder.titleZH']
@@ -172,7 +141,6 @@ const SearchForm = () => {
               <Form.Item
                 label={t['edit.form.titleEN']}
                 field="titleEN"
-                /*initialValue={'custom'}*/
               >
                 <Input placeholder={
                   t['edit.form.placeholder.titleEN']
@@ -211,35 +179,6 @@ const SearchForm = () => {
                 </Select>
               </Form.Item>
             </Grid.Col>
-            {/*<Grid.Col span={10}>*/}
-            {/*  <Form.Item*/}
-            {/*    label={t['edit.form.classfications']}*/}
-            {/*    field="classifications"*/}
-            {/*  >*/}
-                {/*<Select*/}
-                {/*  placeholder={*/}
-                {/*    t['edit.form.placeholder.classfications']*/}
-                {/*  }*/}
-                {/*  mode="multiple"*/}
-                {/*  options={classifications}*/}
-                {/*  renderFormat={(option, value) => (*/}
-                {/*    option ? (*/}
-                {/*      <span>*/}
-                {/*        <IconStar*/}
-                {/*          style={{*/}
-                {/*            color: option.extra.color*/}
-                {/*          }}*/}
-                {/*        />*/}
-                {/*        {option.value}*/}
-                {/*      </span>*/}
-                {/*    ) : (*/}
-                {/*      value*/}
-                {/*    )*/}
-                {/*  )}*/}
-                {/*>*/}
-                {/*</Select>*/}
-            {/*  </Form.Item>*/}
-            {/*</Grid.Col>*/}
             <Grid.Col span={10}>
               <Form.Item
                 field="type"
@@ -257,7 +196,7 @@ const SearchForm = () => {
           </Grid.Row>
         </Card>
       </Form>
-
+      
       {
         isMd ?
           <MarkdownText textValue={textValue} setTextValue={setTextValue} />

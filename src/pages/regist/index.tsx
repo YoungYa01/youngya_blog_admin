@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import Footer from '@/components/Footer';
 import Logo from '@/assets/Y.png';
-import LoginForm from './form';
-import LoginBanner from './banner';
+import RegistForm from './form';
 import styles from './style/index.module.less';
 import { Image } from '@arco-design/web-react';
 
@@ -10,7 +9,7 @@ import { Image } from '@arco-design/web-react';
  *  登录页
  * @returns React.ReactNode login
  */
-function Login() {
+function Regist() {
   useEffect(() => {
     document.body.setAttribute('arco-theme', 'light');
   }, []);
@@ -22,7 +21,7 @@ function Login() {
       </div>
       <div className={styles.content}>
         <div className={styles['content-inner']}>
-          <LoginForm />
+          <RegistForm />
         </div>
       </div>
       <div className={styles.footer}>
@@ -31,6 +30,6 @@ function Login() {
     </div>
   );
 }
-Login.displayName = 'LoginPage';
+Regist.displayName = 'LoginPage';
 
-export default Login;
+export default Regist;

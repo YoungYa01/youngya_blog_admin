@@ -6,15 +6,14 @@ import {
   Space, Message
 } from '@arco-design/web-react';
 import { FormInstance } from '@arco-design/web-react/es/Form';
-import { IconLock, IconUser } from '@arco-design/web-react/icon';
+import { IconLock, IconPaste, IconUser } from '@arco-design/web-react/icon';
 import React, { useEffect, useRef, useState } from 'react';
 import useStorage from '@/utils/useStorage';
 import useLocale from '@/utils/useLocale';
 import locale from './locale';
 import styles from './style/index.module.less';
-import { loginReq } from '@/api/public';
-import { getUserToken, setUserInfo, setUserState, setUserToken } from '@/utils/localstorage';
 import { useHistory } from 'react-router-dom';
+import { registReq } from '@/api/public';
 
 export default function LoginForm() {
   const formRef = useRef<FormInstance>();
@@ -23,78 +22,28 @@ export default function LoginForm() {
   const [loginParams, setLoginParams, removeLoginParams] =
     useStorage('loginParams');
   const history = useHistory();
-
   const t = useLocale(locale);
 
   const [rememberPassword, setRememberPassword] = useState(!!loginParams);
 
   const [captcha, setCaptcha] = useState(import.meta.env.VITE_IMAGE_URL + '/auth/code' + '?t=' + new Date().getTime());
 
-  function afterLoginSuccess(params, token, user) {
-    // 记住密码
-    if (rememberPassword) {
-      setLoginParams(JSON.stringify(params));
-    } else {
-      removeLoginParams();
-    }
-    // 记录登录状态
-    setUserState('login');
-    // 记录Token
-    setUserToken(token);
-    // 记录User
-    setUserInfo(user);
-    localStorage.setItem('userRole', 'admin');
-    // 跳转首页
-    window.location.href = '/';
-  }
-
-  function login(params) {
-    setErrorMessage('');
-    setLoading(true);
-    console.log(params);
-    loginReq(params)
-      .then((resp) => {
-        console.log(resp);
-        if (resp.data.code !== 200) {
-          return Message.error(resp.data.message);
-        }
-        const { token } = resp.data;
-        afterLoginSuccess(params, token, { ...params, role: 'admin' });
-      })
-      .catch(error => {
-        Message.error(error.response.data.message);
-        setErrorMessage(error.response.data.message || t['login.form.login.errMsg']);
-      })
-      .finally(() => {
-        setCaptcha(import.meta.env.VITE_BASE_URL + '/auth/code' + '?t=' + new Date().getTime());
-        setLoading(false);
-      });
-  }
 
   function onSubmitClick() {
 
     formRef.current.validate().then((values) => {
-      console.log("values", values);
-      login({ ...values, role: 'admin' });
+      console.log('values', values);
+      registReq(values)
+        .then(response=>{
+          if(response.data.code === 200){
+            Message.success(response.data.message);
+            history.push('/');
+            return;
+          }
+          Message.error(response.data.message);
+        })
     });
   }
-
-  // 读取 localStorage，设置初始值
-  useEffect(() => {
-    const rememberPassword = !!loginParams;
-    setRememberPassword(rememberPassword);
-    if (formRef.current && rememberPassword) {
-      const parseParams = JSON.parse(loginParams);
-      formRef.current.setFieldsValue(parseParams);
-    }
-  }, [loginParams]);
-
-  useEffect(() => {
-    const token = getUserToken();
-    if (token) {
-      window.location.href = '/';
-    }
-  }, []);
 
   return (
     <div className={styles['login-form-wrapper']}>
@@ -126,7 +75,24 @@ export default function LoginForm() {
           <Input.Password
             prefix={<IconLock />}
             placeholder={t['login.form.password.placeholder']}
-            onPressEnter={onSubmitClick}
+          />
+        </Form.Item>
+        <Form.Item
+          field="rePassword"
+          rules={[{ required: true, message: t['login.form.password.errMsg'] }]}
+        >
+          <Input.Password
+            prefix={<IconPaste />}
+            placeholder={t['login.form.rePassword.placeholder']}
+          />
+        </Form.Item>
+        <Form.Item
+          field="email"
+          rules={[{ required: true, message: t['login.form.email.errMsg'] }]}
+        >
+          <Input.Password
+            prefix={<IconLock />}
+            placeholder={t['login.form.email.placeholder']}
           />
         </Form.Item>
         <Space style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -141,8 +107,8 @@ export default function LoginForm() {
             />
           </Form.Item>
           <img src={captcha} alt=""
-            style={{ flex: 1 }}
-            onClick={() => setCaptcha(import.meta.env.VITE_IMAGE_URL + '/auth/code' + '?t=' + new Date().getTime())} />
+               style={{ flex: 1 }}
+               onClick={() => setCaptcha(import.meta.env.VITE_IMAGE_URL + '/auth/code' + '?t=' + new Date().getTime())} />
         </Space>
         <Space size={16} direction="vertical">
           <div className={styles['login-form-password-actions']}>
@@ -152,15 +118,15 @@ export default function LoginForm() {
             {/*<Link>{t['login.form.forgetPassword']}</Link>*/}
           </div>
           <Button type="primary" long onClick={onSubmitClick} loading={loading}>
-            {t['login.form.login']}
+            {t['login.form.register']}
           </Button>
           <Button
             type="text"
             long
             className={styles['login-form-register-btn']}
-            onClick={() => history.push('/regist')}
+            onClick={() => history.push('/login')}
           >
-            {t['login.form.register']}
+            {t['login.form.login']}
           </Button>
         </Space>
       </Form>
