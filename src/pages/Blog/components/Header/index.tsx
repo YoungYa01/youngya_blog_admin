@@ -47,10 +47,15 @@ const Header = (): JSX.Element => {
         footer={null}
         style={{
           backgroundColor: '#21262a',
-          color: 'white',
+          color: 'white'
         }}
         visible={visible}
-        closeIcon={<IconClose style={{color: 'white'}} onClick={() => setVisible(false)}/>}
+        closeIcon={
+          <IconClose
+            style={{ color: 'white' }}
+            onClick={() => setVisible(false)}
+          />
+        }
       >
         {
           items.map((item, index) => (
@@ -61,7 +66,7 @@ const Header = (): JSX.Element => {
                 color: 'white',
                 fontSize: '20px',
                 fontWeight: 'bold',
-                textAlign: 'center',
+                textAlign: 'center'
               }}
               key={index}
               onClick={() => handleItemClick(item.path)}

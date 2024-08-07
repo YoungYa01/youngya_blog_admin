@@ -1,6 +1,7 @@
 import React from 'react';
 import Spline from '@splinetool/react-spline';
 import style from './index.module.less';
+import { IconDoubleDown } from '@arco-design/web-react/icon';
 
 export default () => {
   return (
@@ -24,6 +25,7 @@ export default () => {
           className={style['first_screen_right']}
           scene="https://prod.spline.design/xWsTJCxKKrmjXpRZ/scene.splinecode"
         />
+        <IconDoubleDown className={style['down_btn']}/>
       </div>
     </div>
   );

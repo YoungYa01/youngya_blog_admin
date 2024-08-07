@@ -84,7 +84,7 @@ function Index() {
       if (window.location.pathname.includes('blog')) {
         return;
       }
-      window.location.pathname = '/login';
+      window.location.pathname = '/blog';
     }
   }, []);
 
