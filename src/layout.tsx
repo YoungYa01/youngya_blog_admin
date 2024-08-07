@@ -7,7 +7,12 @@ import {
   IconTag,
   IconMenuFold,
   IconMenuUnfold,
-  IconFontColors, IconBook, IconTags, IconStorage, IconMindMapping
+  IconFontColors,
+  IconBook,
+  IconTags,
+  IconStorage,
+  IconMindMapping,
+  IconPalette
 } from '@arco-design/web-react/icon';
 import { useSelector } from 'react-redux';
 import qs from 'query-string';
@@ -44,6 +49,8 @@ function getIconFromKey(key) {
       return <IconTags className={styles.icon} />;
     case 'classify/classification':
       return <IconStorage className={styles.icon} />;
+    case 'drawingBoard':
+      return <IconPalette className={styles.icon} />;
     default:
       return <div className={styles['icon-empty']} />;
   }
@@ -100,6 +107,7 @@ function PageLayout() {
   const showNavbar = settings.navbar && urlParams.navbar !== false;
   const showMenu = settings.menu && urlParams.menu !== false;
   const showFooter = settings.footer && urlParams.footer !== false;
+  const showBreadcrumb = settings.breadcrumb && urlParams.breadcrumb !== false;
 
   const flattenRoutes = useMemo(() => getFlattenRoutes(routes) || [], [routes]);
 
@@ -237,7 +245,7 @@ function PageLayout() {
           )}
           <Layout className={styles['layout-content']} style={paddingStyle}>
             <div className={styles['layout-content-wrapper']}>
-              {!!breadcrumb.length && (
+              {showBreadcrumb && !!breadcrumb.length && (
                 <div className={styles['layout-breadcrumb']}>
                   <Breadcrumb>
                     {breadcrumb.map((node, index) => (

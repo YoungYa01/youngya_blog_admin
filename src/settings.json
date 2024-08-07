@@ -4,5 +4,6 @@
   "menu": true,
   "footer": true,
   "themeColor": "#165DFF",
-  "menuWidth": 220
+  "menuWidth": 220,
+  "breadcrumb" : true
 }

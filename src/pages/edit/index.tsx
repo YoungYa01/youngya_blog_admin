@@ -19,6 +19,7 @@ import { useHistory } from 'react-router';
 import { IconStar } from '@arco-design/web-react/icon';
 import { articleCreateReq, articleUpdateReq, classificationsReq, tagsReq } from '@/api/article';
 import MarkdownText from '@/components/MarkdownText';
+import { EditStateType } from '@/types';
 
 
 const SearchForm = () => {
@@ -27,18 +28,12 @@ const SearchForm = () => {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
 
-  const { type, data }: {
-    type: 'edit' | 'new',
-    data: {
-      id: number,
-      content: never,
-      titleZH: string,
-      titleEN: string,
-      tags: Array<{ name: string }>,
-      classifications: Array<{ title: string }>,
-      isMarkdown: boolean
-    }
-  } = history.location.state;
+  const [paginate, setPaginate] = useState({
+    page: 1,
+    pageSize: 50
+  });
+
+  const { type, data }: EditStateType = history.location.state;
 
   const [textValue, setTextValue] = useState(type === 'edit' ? data.content : '');
 
@@ -63,36 +58,35 @@ const SearchForm = () => {
   const [respTags, setRespTags] = useState([]);
   const [respClssifications, setClassificationsResponseData] = useState([]);
 
-  const [isMd, setIsMd] = useState<boolean>(data?.isMarkdown || false);
+  const [isMd, setIsMd] = useState<boolean>(true);
 
   useEffect(() => {
-    tagsReq()
+    tagsReq(paginate)
       .then(resp => {
         setRespTags(resp.data.data);
-        const data = resp.data.data.map(item => (
+        setTags(resp.data.data.map(item => (
           {
-            label: item.attributes.name,
-            value: item.attributes.name,
-            extra: { ...item.attributes }
+            label: item.name,
+            value: item.id,
+            extra: { ...item }
           }
-        ));
-        setTags(data);
+        )));
       });
   }, []);
-  useEffect(() => {
-    classificationsReq()
-      .then(resp => {
-        setClassificationsResponseData(resp.data.data);
-        const data = resp.data.data.map(item => (
-          {
-            label: item.attributes.title,
-            value: item.attributes.title,
-            extra: { ...item.attributes }
-          }
-        ));
-        setClassifications(data);
-      });
-  }, []);
+  // useEffect(() => {
+    // classificationsReq()
+    //   .then(resp => {
+    //     setClassificationsResponseData(resp.data.data);
+    //     const data = resp.data.data.map(item => (
+    //       {
+    //         label: item.attributes.title,
+    //         value: item.attributes.title,
+    //         extra: { ...item.attributes }
+    //       }
+    //     ));
+    //     setClassifications(data);
+    //   });
+  // }, []);
 
 
   function handleSubmit() {
@@ -100,16 +94,14 @@ const SearchForm = () => {
     setLoading(true);
     if (type === 'edit') {
       articleUpdateReq(data.id, {
-        data: {
-          tags: respTags.filter(item => res.tags.includes(item.attributes.name)),
-          classifications: respClssifications.filter(item => res.classifications.includes(item.attributes.title)),
-          content: textValue,
-          titleZH: res.titleZH,
-          titleEN: res.titleEN
-        }
+        tagList: res.tags,
+        // classifications: respClssifications.filter(item => res.classifications.includes(item.attributes.title)),
+        content: textValue,
+        titleZH: res.titleZH,
+        titleEN: res.titleEN
       })
         .then(resp => {
-          Message.success(t['groupForm.submitSuccess']);
+          Message.success(resp.data.message);
         })
         .catch(error => {
           Message.error(error.response.data.error.message);
@@ -119,13 +111,11 @@ const SearchForm = () => {
         });
     } else {
       articleCreateReq({
-        data: {
-          tags: respTags.filter(item => res.tags.includes(item.attributes.name)),
-          classifications: respClssifications.filter(item => res.classifications.includes(item.attributes.title)),
-          content: textValue,
-          titleZH: res.titleZH,
-          titleEN: res.titleEN
-        }
+        tagList: res.tags,
+        // classifications: respClssifications.filter(item => res.classifications.includes(item.attributes.title)),
+        content: textValue,
+        titleZH: res.titleZH,
+        titleEN: res.titleEN
       })
         .then(resp => {
           Message.success(t['groupForm.submitSuccess']);
@@ -141,6 +131,7 @@ const SearchForm = () => {
 
   function handleReset() {
     formRef.current.resetFields();
+    setTextValue('');
   }
 
 
@@ -152,8 +143,8 @@ const SearchForm = () => {
     formRef.current.setFieldsValue({
       titleZH,
       titleEN,
-      tags: tags.map((item) => item.name),
-      classifications: classifications.map((item) => item.title)
+      tags: tags.map((item) => item.id),
+      classifications: classifications?.map((item) => item.title)
     });
   }, []);
 
@@ -210,7 +201,7 @@ const SearchForm = () => {
                             color: option.extra.color
                           }}
                         />
-                        {option.value}
+                        {option.children}
                       </span>
                     ) : (
                       value
@@ -220,38 +211,39 @@ const SearchForm = () => {
                 </Select>
               </Form.Item>
             </Grid.Col>
+            {/*<Grid.Col span={10}>*/}
+            {/*  <Form.Item*/}
+            {/*    label={t['edit.form.classfications']}*/}
+            {/*    field="classifications"*/}
+            {/*  >*/}
+                {/*<Select*/}
+                {/*  placeholder={*/}
+                {/*    t['edit.form.placeholder.classfications']*/}
+                {/*  }*/}
+                {/*  mode="multiple"*/}
+                {/*  options={classifications}*/}
+                {/*  renderFormat={(option, value) => (*/}
+                {/*    option ? (*/}
+                {/*      <span>*/}
+                {/*        <IconStar*/}
+                {/*          style={{*/}
+                {/*            color: option.extra.color*/}
+                {/*          }}*/}
+                {/*        />*/}
+                {/*        {option.value}*/}
+                {/*      </span>*/}
+                {/*    ) : (*/}
+                {/*      value*/}
+                {/*    )*/}
+                {/*  )}*/}
+                {/*>*/}
+                {/*</Select>*/}
+            {/*  </Form.Item>*/}
+            {/*</Grid.Col>*/}
             <Grid.Col span={10}>
               <Form.Item
-                label={t['edit.form.classfications']}
-                field="classifications"
-              >
-                <Select
-                  placeholder={
-                    t['edit.form.placeholder.classfications']
-                  }
-                  mode="multiple"
-                  options={classifications}
-                  renderFormat={(option, value) => (
-                    option ? (
-                      <span>
-                        <IconStar
-                          style={{
-                            color: option.extra.color
-                          }}
-                        />
-                        {option.value}
-                      </span>
-                    ) : (
-                      value
-                    )
-                  )}
-                >
-                </Select>
-              </Form.Item>
-            </Grid.Col>
-            <Grid.Col span={4}>
-              <Form.Item
                 field="type"
+                label={t['edit.form.content.editor']}
               >
                 <Switch
                   checkedText={t['edit.form.content.type.richText']}

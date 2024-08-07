@@ -17,12 +17,14 @@ import useStorage from './utils/useStorage';
 import { adminInfoReq } from '@/api/user';
 import { generatePermission } from '@/routes';
 import Home from './pages/home';
+import { removeUserToken } from '@/utils/localstorage';
 
 const store = createStore(rootReducer);
 
 function Index() {
   const [lang, setLang] = useStorage('arco-lang', 'en-US');
   const [theme, setTheme] = useStorage('arco-theme', 'light');
+  const [_, setUserStatus] = useStorage('userStatus');
 
   function getArcoLocale() {
     switch (lang) {
@@ -43,26 +45,39 @@ function Index() {
 
     adminInfoReq()
       .then(resp => {
+        console.log(resp);
+        console.log({
+          ...resp.data,
+          avatar: import.meta.env.VITE_BASE_URL + resp.data.avatar ?? '',
+          permissions: generatePermission('admin')
+        });
         store.dispatch({
           type: 'update-userInfo',
           payload: {
             userInfo: {
-              ...resp.data.data.attributes,
-              avatar: import.meta.env.VITE_BASE_URL + resp.data.data.attributes.avatar.data.attributes.url,
+              ...resp.data,
+              avatar: import.meta.env.VITE_BASE_URL + resp.data.avatar ?? '',
               permissions: generatePermission('admin')
             },
             userLoading: false
           }
         });
-      }).catch(error => {
-      Message.error(error.response.data.error.message);
-    });
+      })
+      .catch(error => {
+        setUserStatus('logout');
+        removeUserToken();
+        location.href = '/login';
+        Message.error(error.response.message);
+      });
   }
 
   useEffect(() => {
     if (checkLogin()) {
       fetchUserInfo();
     } else if (window.location.pathname.replace(/\//g, '') !== 'login') {
+      if (window.location.pathname.includes('main')) {
+        return;
+      }
       window.location.pathname = '/login';
     }
   }, []);

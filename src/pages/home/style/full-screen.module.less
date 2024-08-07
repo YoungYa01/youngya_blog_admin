@@ -1,14 +1,29 @@
 .root_content {
   width: 100vw;
   height: 100vh;
-  background: url("@/assets/bg.jpg") fixed;
-  background-position: center center;
+  background-color: #000;
+  //background: url("@/assets/bg.jpg") fixed;
+  //background-position: center center;
   position: relative;
   user-select: none;
 
+  .spline_container {
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    .spline{
+    }
+
+  }
+
   .info {
+    width: 100vw;
     position: absolute;
-    top: 50%;
+    top: 90%;
     left: 50%;
     transform: translate(-50%, -80%);
     text-align: center;

@@ -36,6 +36,11 @@ export const routes: IRoute[] = [
         key: 'edit',
         ignore: true
       },
+      {
+        name: 'menu.article.preview',
+        key: 'preview',
+        ignore: true
+      },
     ]
   },
   {
@@ -53,6 +58,10 @@ export const routes: IRoute[] = [
         // ignore: true
       },
     ]
+  },
+  {
+    name:'menu.drawing.board',
+    key:'drawingBoard',
   }
 ];
 

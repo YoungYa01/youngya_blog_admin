@@ -16,6 +16,7 @@ import useLocale from '@/utils/useLocale';
 import local from '@/pages/classify/tags/local';
 import style from './index.module.less';
 import { IconRefresh } from '@arco-design/web-react/icon';
+import { PaginateType, TagType } from '@/types';
 
 const Tags = () => {
   const t = useLocale(local);
@@ -23,27 +24,23 @@ const Tags = () => {
   const [visible, setVisible] = React.useState(false);
   const [type, setType] = useState<'new' | 'edit'>('edit');
   const [history, setHistory] = useState([]);
-  const [curTag, setCurTag] = useState<{
-    id: number;
-    attributes: {
-      name: string;
-      color: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-  }>({ attributes: { color: '', name: '', updatedAt: '', createdAt: '' }, id: 0 });
+  const [curTag, setCurTag] = useState<TagType>({ icon: '', color: '', createdAt: '', name: '', id: 0 });
+  const [paginate, setPaginate] = useState<PaginateType>({
+    page: 1,
+    pageSize: 50,
+    total: 0
+  });
 
   const getList = () => {
-    tagsReq()
+    tagsReq(paginate)
       .then(resp => {
-        console.log(resp.data.data);
+        console.log(resp.data);
         setTags(resp.data.data);
       });
   };
 
   const onSearch = (value) => {
-    console.log(value);
-    tagFuzzyReq(value)
+    tagFuzzyReq({ name: value },paginate)
       .then(resp => {
         Message.success('搜索成功');
         setTags(resp.data.data);
@@ -56,25 +53,23 @@ const Tags = () => {
   const onSubmit = () => {
     if (type === 'new') {
       tagCreateReq({
-        data: {
-          name: curTag.attributes.name,
-          color: curTag.attributes.color
-        }
+        name: curTag.name,
+        color: curTag.color,
+        icon: curTag.icon
       })
         .then(resp => {
-          Message.success('创建成功');
-          getList();
-        })
-        .catch(error => {
-          Message.error(error.response.data.error.message);
+          const { code, msg } = resp.data;
+          if (code === 200) {
+            getList();
+            return Message.success(msg);
+          }
+          Message.error(msg);
         });
     } else {
       tagUpdateReq(curTag.id, {
-        data: {
-          id: curTag.id,
-          name: curTag.attributes.name,
-          color: curTag.attributes.color
-        }
+        name: curTag.name,
+        color: curTag.color,
+        icon: curTag.icon
       })
         .then(resp => {
           Message.success('更新成功');
@@ -88,19 +83,20 @@ const Tags = () => {
 
   const onDelete = () => {
     tagDeleteReq(curTag.id)
-      .then(() => {
-        Message.success('删除成功');
-        setVisible(false);
-        getList();
-      })
-      .catch(error => {
-        Message.error(error.response.data.error.message);
+      .then(resp => {
+        const { code, msg } = resp.data;
+        if (code === 200) {
+          setVisible(false);
+          getList();
+          return Message.success('删除成功');
+        }
+        return Message.error(msg);
       });
   };
 
   const addHistory = (visible) => {
     if (!visible) {
-      const newHistory = [...history.slice(-10), curTag.attributes.color];
+      const newHistory = [...history.slice(-10), curTag.color];
       setHistory(newHistory);
     }
   };
@@ -109,7 +105,8 @@ const Tags = () => {
     return (
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         {
-          type === 'edit' && <Button type={'outline'} status={'danger'} onClick={onDelete} size={'large'}>{t['modal.delete.text']}</Button>
+          type === 'edit' &&
+          <Button type={'outline'} status={'danger'} onClick={onDelete} size={'large'}>{t['modal.delete.text']}</Button>
         }
         <Button
           type={'outline'}
@@ -132,7 +129,7 @@ const Tags = () => {
         <Button type={'outline'} onClick={() => {
           setVisible(true);
           setType('new');
-          setCurTag({ attributes: { color: '', createdAt: '', name: '', updatedAt: '' }, id: 0 });
+          setCurTag({ color: '', createdAt: '', name: '', icon: '', id: 0 });
         }} size={'large'}>{t['modal.ok.text.new']}</Button>
         <div>
           <Input.Search
@@ -160,7 +157,7 @@ const Tags = () => {
                 >
                   <Tag
                     size={'large'}
-                    color={item.attributes.color}
+                    color={item.color}
                     className={style['tag']}
                     onClick={() => {
                       setVisible(true);
@@ -168,7 +165,7 @@ const Tags = () => {
                       setType('edit');
                     }}
                   >
-                    {item.attributes.name}
+                    {item.name}
                   </Tag>
                 </Grid.Col>
               );
@@ -194,23 +191,20 @@ const Tags = () => {
             {
               label: t['modal.input.label'],
               value: <Input
-                value={curTag.attributes.name}
+                value={curTag.name}
                 maxLength={10}
                 showWordLimit
                 placeholder={t['modal.input.placeholder']}
                 style={{ width: 300 }}
                 onChange={(value) => setCurTag({
                   ...curTag,
-                  attributes: {
-                    ...curTag.attributes,
-                    name: value
-                  }
+                  name: value
                 })}
               />
             }, {
               label: t['modal.color.label'],
               value: <ColorPicker
-                value={curTag.attributes.color}
+                value={curTag.color}
                 historyColors={history}
                 showPreset
                 showHistory
@@ -218,10 +212,7 @@ const Tags = () => {
                 onChange={color => {
                   setCurTag({
                     ...curTag,
-                    attributes: {
-                      ...curTag.attributes,
-                      color: color
-                    }
+                    color: color
                   });
                 }}
                 onVisibleChange={addHistory}

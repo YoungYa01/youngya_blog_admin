@@ -6,6 +6,9 @@ import setting from './src/settings.json';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  define: {
+    "process.env.IS_PREACT": JSON.stringify("true"),
+  },
   resolve: {
     alias: [{ find: '@', replacement: '/src' }],
   },
@@ -22,11 +25,12 @@ export default defineConfig({
     }),
   ],
   server: {
+    port: 8080,
     proxy: {
       '/api': {
-        target: 'http://localhost:1337',
+        target: 'http://localhost:3000',
         changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/api/, ''),
+        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },

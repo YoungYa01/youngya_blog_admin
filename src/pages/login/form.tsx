@@ -16,6 +16,7 @@ import styles from './style/index.module.less';
 import { loginReq } from '@/api/public';
 import { Simulate } from 'react-dom/test-utils';
 import { getUserToken, setUserInfo, setUserState, setUserToken } from '@/utils/localstorage';
+import { getCaptcha } from '@/api/public/index';
 
 export default function LoginForm() {
   const formRef = useRef<FormInstance>();
@@ -27,6 +28,8 @@ export default function LoginForm() {
   const t = useLocale(locale);
 
   const [rememberPassword, setRememberPassword] = useState(!!loginParams);
+
+  const [captcha, setCaptcha] = useState(import.meta.env.VITE_BASE_URL + '/auth/code' + '?t=' + new Date().getTime());
 
   function afterLoginSuccess(params, token, user) {
     // 记住密码
@@ -49,15 +52,19 @@ export default function LoginForm() {
   function login(params) {
     setErrorMessage('');
     setLoading(true);
+    console.log(params);
     loginReq(params)
       .then((resp) => {
         console.log(resp);
-        const { data: { jwt, user } } = resp;
-        afterLoginSuccess(params, jwt, user);
+        if (resp.data.code !== 200) {
+          return Message.error(resp.data.message);
+        }
+        const { token } = resp.data;
+        afterLoginSuccess(params, token, { ...params, role: 'admin' });
       })
       .catch(error => {
-        Message.error(error.response.data.error.message);
-        setErrorMessage(error.response.data.error.message || t['login.form.login.errMsg']);
+        Message.error(error.response.data.message);
+        setErrorMessage(error.response.data.message || t['login.form.login.errMsg']);
       })
       .finally(() => {
         setLoading(false);
@@ -67,7 +74,8 @@ export default function LoginForm() {
   function onSubmitClick() {
 
     formRef.current.validate().then((values) => {
-      login(values);
+      console.log("values", values);
+      login({ ...values, role: 'admin' });
     });
   }
 
@@ -99,10 +107,10 @@ export default function LoginForm() {
         className={styles['login-form']}
         layout="vertical"
         ref={formRef}
-        initialValues={{ identifier: 'yonghu', password: 'Yonghu123' }}
+        initialValues={{ username: 'admin', password: 'admin123', captcha: '' }}
       >
         <Form.Item
-          field="identifier"
+          field="username"
           rules={[{ required: true, message: t['login.form.userName.errMsg'] }]}
         >
           <Input
@@ -121,6 +129,21 @@ export default function LoginForm() {
             onPressEnter={onSubmitClick}
           />
         </Form.Item>
+        <Space style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Form.Item
+            field="captcha"
+            rules={[{ required: true, message: t['login.form.captcha.errMsg'] }]}
+          >
+            <Input
+              placeholder={t['login.form.captcha.placeholder']}
+              onPressEnter={onSubmitClick}
+              style={{ flex: 1 }}
+            />
+          </Form.Item>
+          <img src={captcha} alt=""
+            style={{ flex: 1 }}
+            onClick={() => setCaptcha(import.meta.env.VITE_BASE_URL + '/auth/code' + '?t=' + new Date().getTime())} />
+        </Space>
         <Space size={16} direction="vertical">
           <div className={styles['login-form-password-actions']}>
             <Checkbox checked={rememberPassword} onChange={setRememberPassword}>

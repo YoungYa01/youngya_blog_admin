@@ -7,9 +7,14 @@ const i18n = {
     'menu.classify':'Classification Management',
     'menu.classify.tags':'Tags',
     'menu.classify.classification':'Article Classification',
-
-
+    'menu.drawing.board':'Magic whiteboard',
     'menu.article.edit':'Edit Article',
+    'menu.article.preview':'Index Article',
+
+
+
+
+
     'menu.user.info': 'User Info',
     'menu.user.setting': 'User Setting',
     'menu.user.switchRoles': 'Switch Roles',
@@ -53,8 +58,12 @@ const i18n = {
     'menu.classify':'分类管理',
     'menu.classify.tags':'标签',
     'menu.classify.classification':'文章分类',
-
+    'menu.drawing.board':'魔法白板',
     'menu.article.edit':'编辑文章',
+    'menu.article.preview':'预览文章',
+
+
+
     'menu.user.info': '用户信息',
     'menu.user.setting': '用户设置',
     'menu.user.switchRoles': '切换角色',

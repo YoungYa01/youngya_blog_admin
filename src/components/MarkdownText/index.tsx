@@ -22,13 +22,13 @@ const MarkdownText = (props): JSX.Element => {
       files.map((file) => {
         return new Promise((rev, rej) => {
           const form = new FormData();
-          form.append('files', file);
+          form.append('file', file);
 
 
           uploadImgReq(form)
             .then((res) => {
               console.log(res.data);
-              rev(res.data);
+              rev(res.data.data);
             })
             .catch((error) => {
               console.log(error);
@@ -39,10 +39,8 @@ const MarkdownText = (props): JSX.Element => {
       })
     );
 
-    callback(`localhost:1337${res[0].url}`)
     callback(res.map((item) => {
-      console.log(item, `localhost:1337${item[0].url}`);
-      return `http://localhost:1337${item[0].url}`;
+      return `http://localhost:3000${item}`;
     }));
   };
 
@@ -55,7 +53,7 @@ const MarkdownText = (props): JSX.Element => {
       <MdEditor
         modelValue={value}
         onChange={setValue}
-        style={{ height: 500 }}
+        style={{ height: 550 }}
         theme={theme as Themes}
         onUploadImg={onUploadImg}
       />

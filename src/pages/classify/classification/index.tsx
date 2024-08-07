@@ -165,7 +165,7 @@ const Tags = () => {
                 >
                   <Tag
                     size={'large'}
-                    color={item.attributes.color}
+                    color={item.color}
                     className={style['tag']}
                     onClick={() => {
                       setVisible(true);
@@ -173,7 +173,7 @@ const Tags = () => {
                       setType('edit');
                     }}
                   >
-                    {item.attributes.title}
+                    {item.title}
                   </Tag>
                 </Grid.Col>
               );
