@@ -10,7 +10,7 @@ import {
 import useLocale from '@/utils/useLocale';
 import locale from './locale';
 import styles from './style/index.module.less';
-import { convertToPlainText } from '@/utils/RichTextChange';
+import { abstractFn, convertToPlainText } from '@/utils/RichTextChange';
 import { useHistory } from 'react-router';
 import { articleDeleteReq } from '@/api/article';
 
@@ -147,7 +147,7 @@ function CardBlock(props) {
           : <>
             <div className={styles.content}>
               {
-                convertToPlainText(card.content)
+                abstractFn(card.content)
               }
             </div>
 

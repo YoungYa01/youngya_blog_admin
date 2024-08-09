@@ -43,7 +43,7 @@ const UploadImage = (props) => {
                 </Button>
 
               }>
-              <img src={`http://localhost:3000${url}`} alt="" style={{ height: 150, background: 'grey' }} />
+              <img src={`${import.meta.env.VITE_BASE_URL}${url}`} alt="" style={{ height: 150, background: 'grey' }} />
             </Popover>
           </>
       }

@@ -1,6 +1,9 @@
 .footer {
   height: 30vh;
   background-color: #202529;
+  @media (max-width: 768px) {
+    height: 100vh;
+  }
 
   .count_container {
     color: rgba(255, 255, 255, 0.5);
@@ -21,6 +24,9 @@
       align-items: center;
       background-color: #20252950;
       margin: 0 150px;
+      @media (max-width: 768px) {
+        margin: 0 50px;
+      }
     }
   }
 
@@ -29,6 +35,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    @media (max-width: 768px) {
+      flex-direction: column;
+      .footer_content_left {
+        height: 80px!important;
+        border: none !important;
+      }
+    }
 
     .footer_content_left {
       height: 180px;
@@ -53,6 +66,9 @@
       color: #fff;
       border-top: 1px solid #31363a;
       border-bottom: 1px solid #31363a;
+      @media (max-width: 768px) {
+        flex-direction: column;
+      }
 
       .friend_chain {
         display: flex;
@@ -60,6 +76,9 @@
         align-items: center;
         flex-direction: column;
         padding: 20px;
+        @media (max-width: 768px) {
+          padding: 0;
+        }
 
         .chain_icon {
           font-size: 25px;
@@ -98,5 +117,13 @@
     align-items: center;
     gap: 50px;
     background-color: #202529;
+    @media (max-width: 768px) {
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      span{
+        text-align: center;
+      }
+    }
   }
 }

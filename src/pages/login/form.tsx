@@ -104,7 +104,7 @@ export default function LoginForm() {
         className={styles['login-form']}
         layout="vertical"
         ref={formRef}
-        initialValues={{ username: 'admin', password: 'admin123', captcha: '' }}
+        initialValues={{ username: '', password: '', captcha: '' }}
       >
         <Form.Item
           field="username"

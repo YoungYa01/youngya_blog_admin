@@ -30,12 +30,22 @@ const Tags = () => {
     pageSize: 50,
     total: 0
   });
+  const [loading, setLoading] = useState(false);
 
   const getList = () => {
+    setLoading(true);
     tagsReq(paginate)
       .then(resp => {
         setTags(resp.data.data);
-      });
+        setLoading(false)
+      })
+      .catch(error => {
+        Message.error(error.response.data.data);
+      })
+      .finally(() => {
+          setLoading(false)
+        }
+      )
   };
 
   const onSearch = (value) => {
@@ -60,7 +70,8 @@ const Tags = () => {
           const { code, msg } = resp.data;
           if (code === 200) {
             getList();
-            return Message.success(msg);
+            Message.success(msg);
+            return setVisible(false);
           }
           Message.error(msg);
         });
@@ -71,8 +82,9 @@ const Tags = () => {
         icon: curTag.icon
       })
         .then(resp => {
-          Message.success('更新成功');
           getList();
+          Message.success('更新成功');
+          setVisible(false);
         })
         .catch(error => {
           Message.error(error.response.data.error.message);
@@ -140,6 +152,7 @@ const Tags = () => {
         </div>
       </div>
       <Card
+        loading={loading}
         bordered>
         <Grid.Row className="grid-demo">
           {

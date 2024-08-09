@@ -8,7 +8,7 @@ const Layout = (props) => {
   const [isHome, setIsHome] = useState(true);
 
   useEffect(() => {
-      setIsHome(location.pathname === '/blog/');
+      setIsHome(location.pathname === '/blog/' || location.pathname === '/blog');
     }, []
   );
 

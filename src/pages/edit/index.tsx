@@ -50,7 +50,7 @@ const SearchForm = () => {
   }>>([]);
 
   const [isMd, setIsMd] = useState<boolean>(true);
-  const [url,setUrl] = useState(data.cover || null);
+  const [url,setUrl] = useState(data?.cover || null);
 
   useEffect(() => {
     console.log(data);

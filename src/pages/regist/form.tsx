@@ -19,12 +19,9 @@ export default function LoginForm() {
   const formRef = useRef<FormInstance>();
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
-  const [loginParams, setLoginParams, removeLoginParams] =
-    useStorage('loginParams');
   const history = useHistory();
   const t = useLocale(locale);
 
-  const [rememberPassword, setRememberPassword] = useState(!!loginParams);
 
   const [captcha, setCaptcha] = useState(import.meta.env.VITE_IMAGE_URL + '/api/auth/code' + '?t=' + new Date().getTime());
 
@@ -55,7 +52,7 @@ export default function LoginForm() {
         className={styles['login-form']}
         layout="vertical"
         ref={formRef}
-        initialValues={{ username: 'admin', password: 'admin123', captcha: '' }}
+        initialValues={{ username: '', password: '', captcha: '' }}
       >
         <Form.Item
           field="username"
@@ -110,12 +107,6 @@ export default function LoginForm() {
                onClick={() => setCaptcha(import.meta.env.VITE_IMAGE_URL + '/api/auth/code' + '?t=' + new Date().getTime())} />
         </Space>
         <Space size={16} direction="vertical">
-          <div className={styles['login-form-password-actions']}>
-            <Checkbox checked={rememberPassword} onChange={setRememberPassword}>
-              {t['login.form.rememberPassword']}
-            </Checkbox>
-            {/*<Link>{t['login.form.forgetPassword']}</Link>*/}
-          </div>
           <Button type="primary" long onClick={onSubmitClick} loading={loading}>
             {t['login.form.register']}
           </Button>

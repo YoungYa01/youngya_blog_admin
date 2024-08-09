@@ -72,7 +72,7 @@ const Previewer = () => {
         top: '0',
         zIndex: '-1'
       }}>
-        <img src={`http://localhost:3000${data.cover}`} alt="" width={'100%'} />
+        <img src={`${import.meta.env.VITE_BASE_URL}${data.cover}`} alt="" width={'100%'} />
       </div>
       <div
         style={{

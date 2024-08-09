@@ -38,7 +38,7 @@ const MarkdownText = (props): JSX.Element => {
     );
 
     callback(res.map((item) => {
-      return `http://localhost:3000${item}`;
+      return `${import.meta.env.VITE_BASE_URL}${item}`;
     }));
   };
 

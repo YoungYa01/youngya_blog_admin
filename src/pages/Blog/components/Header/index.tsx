@@ -57,6 +57,7 @@ const Header = (props): JSX.Element => {
             color: 'white'
           }}
           visible={visible}
+          onCancel={() => setVisible(false)}
           closeIcon={
             <IconClose
               style={{ color: 'white' }}

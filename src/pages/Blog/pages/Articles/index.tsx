@@ -84,7 +84,7 @@ export default () => {
                 className={style['article_card']}
                 cover={
                   <div className={style['article_cover']}>
-                    <img src={`http://localhost:3000${item.cover}`} alt="" />
+                    <img src={`${import.meta.env.VITE_BASE_URL}${item.cover}`} alt="" />
                   </div>
                 }
               />

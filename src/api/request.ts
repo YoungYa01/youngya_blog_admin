@@ -4,7 +4,7 @@ import { getUserToken } from '@/utils/localstorage';
 function createAxiosInstance(): AxiosInstance {
   const instance = axios.create({
     baseURL: import.meta.env.VITE_BASE_URL as string, // 使用之前确保类型安全的baseURL
-    timeout: 5000
+    timeout: 5000,
   });
 
   // 超时和异常处理
