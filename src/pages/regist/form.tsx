@@ -26,7 +26,7 @@ export default function LoginForm() {
 
   const [rememberPassword, setRememberPassword] = useState(!!loginParams);
 
-  const [captcha, setCaptcha] = useState(import.meta.env.VITE_IMAGE_URL + '/auth/code' + '?t=' + new Date().getTime());
+  const [captcha, setCaptcha] = useState(import.meta.env.VITE_IMAGE_URL + '/api/auth/code' + '?t=' + new Date().getTime());
 
 
   function onSubmitClick() {
@@ -107,7 +107,7 @@ export default function LoginForm() {
           </Form.Item>
           <img src={captcha} alt=""
                style={{ flex: 1 }}
-               onClick={() => setCaptcha(import.meta.env.VITE_IMAGE_URL + '/auth/code' + '?t=' + new Date().getTime())} />
+               onClick={() => setCaptcha(import.meta.env.VITE_IMAGE_URL + '/api/auth/code' + '?t=' + new Date().getTime())} />
         </Space>
         <Space size={16} direction="vertical">
           <div className={styles['login-form-password-actions']}>
