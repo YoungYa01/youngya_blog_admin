@@ -14,7 +14,6 @@ import { lineNumbers } from '@codemirror/view';
 // });
 
 const MarkdownText = (props): JSX.Element => {
-  console.log(props);
   const { textValue, setTextValue } = props;
   const [value, setValue] = useState( textValue || '**Hello world!!!**');
   const { theme } = useContext(GlobalContext);
@@ -25,11 +24,8 @@ const MarkdownText = (props): JSX.Element => {
         return new Promise((rev, rej) => {
           const form = new FormData();
           form.append('file', file);
-
-
           uploadImgReq(form)
             .then((res) => {
-              console.log(res.data);
               rev(res.data.data);
             })
             .catch((error) => {

@@ -16,7 +16,6 @@ const DrawingBoard = () => {
   }, [lang]);
 
   useEffect(() => {
-    console.log(settings);
     dispatch({
       type: 'update-settings',
       payload: {

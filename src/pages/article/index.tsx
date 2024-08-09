@@ -42,7 +42,6 @@ export default function Article() {
     setLoading(true);
     articleFuzzyReq({ titleZH: value })
       .then(resp => {
-        console.log(resp);
         setData(resp.data.data);
         setLoading(false);
       });

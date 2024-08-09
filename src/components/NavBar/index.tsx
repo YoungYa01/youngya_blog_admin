@@ -139,7 +139,7 @@ function Navbar({ show }: { show: boolean }) {
   return (
     <div className={styles.navbar}>
       <div className={styles.left}>
-        <div className={styles.logo} onClick={() => window.location.href = '/main'}>
+        <div className={styles.logo} onClick={() => window.location.href = '/blog/'}>
           <img src={Logo} alt="logo"></img>
           <div className={styles['logo-name']}>Admin</div>
         </div>

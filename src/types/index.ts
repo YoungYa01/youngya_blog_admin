@@ -20,7 +20,8 @@ export interface EditStateType {
     titleZH: string,
     titleEN: string,
     tags: { name: string, color: string, id: number }[],
-    classifications: Array<{ title: string }>,
-    isMarkdown: boolean
+    cover: string,
+    isMarkdown: boolean,
+    createdAt: string,
   }
 }

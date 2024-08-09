@@ -34,7 +34,6 @@ const Tags = () => {
   const getList = () => {
     tagsReq(paginate)
       .then(resp => {
-        console.log(resp.data);
         setTags(resp.data.data);
       });
   };

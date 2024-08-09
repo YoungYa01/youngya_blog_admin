@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import css from './style/aboutMe.module.less';
 import { Descriptions, Statistic } from '@arco-design/web-react';
-import { IconArrowRise } from '@arco-design/web-react/icon';
 import { StatisticProps } from '@arco-design/web-react/es/Statistic/interface';
 
 const AboutMe = (): JSX.Element => {
@@ -52,12 +51,15 @@ const AboutMe = (): JSX.Element => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           if (aRef.current && bRef.current) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             aRef.current.countUp();
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             bRef.current.countUp();
           }
         }
       });
-      console.log(entries, observer);
     });
     observer.observe(document.getElementById('n1'));
     observer.observe(document.getElementById('n2'));

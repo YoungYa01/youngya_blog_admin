@@ -17,6 +17,7 @@ const i18n = {
     'edit.form.content.editor': 'Editor',
     'edit.form.content.type.richText': 'Rich Text',
     'edit.form.content.type.markdown': 'Markdown Editor',
+    'edit.form.cover':'Article Cover'
   },
   'zh-CN': {
     'edit.form.titleZH': '文章名称',
@@ -36,6 +37,7 @@ const i18n = {
     'edit.form.content.editor': '编辑器',
     'edit.form.content.type.richText': '富文本编辑器',
     'edit.form.content.type.markdown': 'Markdown编辑器',
+    'edit.form.cover':'文章封面'
   },
 };
 

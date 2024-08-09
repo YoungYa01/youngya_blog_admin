@@ -16,6 +16,7 @@
     "@antv/data-set": "^0.11.8",
     "@arco-design/color": "^0.4.0",
     "@arco-design/web-react": "^2.32.2",
+    "@arco-materials/confetti-button": "^1.0.1",
     "@arco-plugins/vite-react": "^1.0.5",
     "@arco-themes/react-arco-pro": "^0.0.7",
     "@excalidraw/excalidraw": "^0.17.6",

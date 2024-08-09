@@ -4,7 +4,8 @@ import style from './index.module.less';
 import { Button, Drawer } from '@arco-design/web-react';
 import { IconClose, IconMenu } from '@arco-design/web-react/icon';
 
-const Header = (): JSX.Element => {
+const Header = (props): JSX.Element => {
+  const { setIsHome } = props;
   const history = useHistory();
   const [visible, setVisible] = useState(false);
   const items = [
@@ -15,71 +16,74 @@ const Header = (): JSX.Element => {
   ];
 
   const handleItemClick = (path: string) => {
-    if(path === '/login'){
+    setIsHome(path === '/');
+    if (path === '/login') {
       history.push(`${path}`);
       return;
     }
     history.push(`/blog${path}`);
   };
   return (
-    <div className={style['header']}>
-      <div className={style['header-logo']}>
-        &lt;YoungYa /&gt;
-      </div>
-      <Button
-        icon={<IconMenu />}
-        className={style['phone_btn']}
-        onClick={() => setVisible(true)}
-      ></Button>
-      <div className={style['header-menu']}>
-        {
-          items.map((item, index) => (
-            <div
-              className={style['header-menu-item']}
-              key={index}
-              onClick={() => handleItemClick(item.path)}
-            >
-              {item.name}
-            </div>
-          ))
-        }
-      </div>
+    <div className={style['header-root']}>
+      <div className={style['header']}>
+        <div className={style['header-logo']}>
+          &lt;YoungYa /&gt;
+        </div>
+        <Button
+          icon={<IconMenu />}
+          className={style['phone_btn']}
+          onClick={() => setVisible(true)}
+        ></Button>
+        <div className={style['header-menu']}>
+          {
+            items.map((item, index) => (
+              <div
+                className={style['header-menu-item']}
+                key={index}
+                onClick={() => handleItemClick(item.path)}
+              >
+                {item.name}
+              </div>
+            ))
+          }
+        </div>
 
-      <Drawer
-        width={'50%'}
-        title={null}
-        footer={null}
-        style={{
-          backgroundColor: '#21262a',
-          color: 'white'
-        }}
-        visible={visible}
-        closeIcon={
-          <IconClose
-            style={{ color: 'white' }}
-            onClick={() => setVisible(false)}
-          />
-        }
-      >
-        {
-          items.map((item, index) => (
-            <div
-              style={{
-                padding: '10px 0',
-                cursor: 'pointer',
-                color: 'white',
-                fontSize: '20px',
-                fontWeight: 'bold',
-                textAlign: 'center'
-              }}
-              key={index}
-              onClick={() => handleItemClick(item.path)}
-            >
-              {item.name}
-            </div>
-          ))
-        }
-      </Drawer>
+        <Drawer
+          width={'50%'}
+          title={null}
+          footer={null}
+          style={{
+            backgroundColor: '#21262a',
+            color: 'white'
+          }}
+          visible={visible}
+          closeIcon={
+            <IconClose
+              style={{ color: 'white' }}
+              onClick={() => setVisible(false)}
+            />
+          }
+        >
+          {
+            items.map((item, index) => (
+              <div
+                style={{
+                  padding: '10px 0',
+                  cursor: 'pointer',
+                  color: 'white',
+                  fontSize: '20px',
+                  fontWeight: 'bold',
+                  textAlign: 'center'
+                }}
+                key={index}
+                onClick={() => handleItemClick(item.path)}
+              >
+                {item.name}
+              </div>
+            ))
+          }
+        </Drawer>
+      </div>
     </div>
   );
 };

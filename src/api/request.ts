@@ -47,5 +47,14 @@ function createAxiosInstance(): AxiosInstance {
   return instance;
 }
 
+// 暴露停止请求方法
+export const stopRequest = () => {
+  axios.CancelToken.source().cancel();
+};
+
+export const abort = () => {
+  axios.CancelToken.source().cancel();
+};
+
 // 使用创建的实例
 export default createAxiosInstance();

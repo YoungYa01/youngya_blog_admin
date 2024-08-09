@@ -19,7 +19,6 @@ import { generatePermission } from '@/routes';
 import Home from './pages/home';
 import { removeUserToken } from '@/utils/localstorage';
 import Blog from '@/pages/Blog';
-import Articles from '@/pages/Blog/pages/Articles';
 import Regist from '@/pages/regist';
 
 const store = createStore(rootReducer);
@@ -48,12 +47,6 @@ function Index() {
 
     adminInfoReq()
       .then(resp => {
-        console.log(resp);
-        console.log({
-          ...resp.data,
-          avatar: import.meta.env.VITE_BASE_URL + resp.data.avatar ?? '',
-          permissions: generatePermission('admin')
-        });
         store.dispatch({
           type: 'update-userInfo',
           payload: {

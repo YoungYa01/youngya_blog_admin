@@ -51,10 +51,8 @@ export default function LoginForm() {
   function login(params) {
     setErrorMessage('');
     setLoading(true);
-    console.log(params);
     loginReq(params)
       .then((resp) => {
-        console.log(resp);
         if (resp.data.code !== 200) {
           return Message.error(resp.data.message);
         }
@@ -74,7 +72,6 @@ export default function LoginForm() {
   function onSubmitClick() {
 
     formRef.current.validate().then((values) => {
-      console.log("values", values);
       login({ ...values, role: 'admin' });
     });
   }

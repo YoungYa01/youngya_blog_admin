@@ -32,7 +32,6 @@ export default function LoginForm() {
   function onSubmitClick() {
 
     formRef.current.validate().then((values) => {
-      console.log('values', values);
       registReq(values)
         .then(response=>{
           if(response.data.code === 200){

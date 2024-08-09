@@ -1,11 +1,73 @@
-import { Divider } from '@arco-design/web-react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './index.module.less';
 import { IconEmail, IconHome, IconQq } from '@arco-design/web-react/icon';
+import { getAccessCountReq, getPraiseCountReq } from '@/api/public';
+import { Card } from '@arco-design/web-react';
+import { IconAccess } from '@/components/Icon';
 
 const Footer = () => {
+
+  const [praiseCount, setPraiseCount] = useState(0);
+  const [accessCount, setAccessCount] = useState(0);
+
+  const getCount = () => {
+    getAccessCountReq()
+      .then((res) => {
+        setAccessCount(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    getPraiseCountReq()
+      .then((res) => {
+        setPraiseCount(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getCount();
+  }, []);
+
+  const NumCard = (props) => {
+    const { title, icon } = props;
+    return (
+      <Card
+        className={style.num_card}
+        cover={icon}
+      >
+        <Card.Meta
+          title={<span className={style.white_color}>{title}</span>}
+          description={
+            <span className={style.white_color}>
+              {props.children}
+            </span>
+          }
+        />
+      </Card>
+    );
+  };
+
   return (
     <div className={style.footer}>
+      <div className={style.count_container}>
+        <NumCard
+          title="点赞数"
+          icon={
+            <h1>❤️</h1>
+          }
+        >
+        {praiseCount}
+        </NumCard>
+        <NumCard
+          title={'访问数'}
+          icon={<IconAccess size={30}/>}
+        >
+          {accessCount}
+        </NumCard>
+      </div>
       <div className={style.footer_content}>
         <div className={style.footer_content_left}>
           🕊️奔向远方

@@ -21,6 +21,7 @@ import { IconStar } from '@arco-design/web-react/icon';
 import { articleCreateReq, articleUpdateReq, tagsReq } from '@/api/article';
 import MarkdownText from '@/components/MarkdownText';
 import { EditStateType } from '@/types';
+import UploadImage from '@/components/UploadImage';
 
 
 const SearchForm = () => {
@@ -49,8 +50,10 @@ const SearchForm = () => {
   }>>([]);
 
   const [isMd, setIsMd] = useState<boolean>(true);
+  const [url,setUrl] = useState(data.cover || null);
 
   useEffect(() => {
+    console.log(data);
     tagsReq(paginate)
       .then(resp => {
         setTags(resp.data.data.map(item => (
@@ -72,7 +75,8 @@ const SearchForm = () => {
         tagList: res.tags,
         content: textValue,
         titleZH: res.titleZH,
-        titleEN: res.titleEN
+        titleEN: res.titleEN,
+        cover: url
       })
         .then(resp => {
           Message.success(resp.data.message);
@@ -88,7 +92,8 @@ const SearchForm = () => {
         tagList: res.tags,
         content: textValue,
         titleZH: res.titleZH,
-        titleEN: res.titleEN
+        titleEN: res.titleEN,
+        cover: url
       })
         .then(resp => {
           Message.success(t['groupForm.submitSuccess']);
@@ -112,12 +117,11 @@ const SearchForm = () => {
     if (type === 'new') {
       return;
     }
-    const { titleZH, titleEN, tags, classifications } = data;
+    const { titleZH, titleEN, tags } = data;
     formRef.current.setFieldsValue({
       titleZH,
       titleEN,
       tags: tags.map((item) => item.id),
-      classifications: classifications?.map((item) => item.title)
     });
   }, []);
 
@@ -181,22 +185,28 @@ const SearchForm = () => {
             </Grid.Col>
             <Grid.Col span={10}>
               <Form.Item
-                field="type"
-                label={t['edit.form.content.editor']}
+                label={t['edit.form.cover']}
+                field="classifications"
               >
-                <Switch
-                  checkedText={t['edit.form.content.type.richText']}
-                  uncheckedText={t['edit.form.content.type.markdown']}
-                  type="round"
-                  checked={isMd}
-                  onChange={(checked) => setIsMd(checked)}
-                />
+                <UploadImage url={url} setUrl={setUrl}/>
               </Form.Item>
-            </Grid.Col>
+            </Grid.Col><Grid.Col span={4}>
+            <Form.Item
+              field="type"
+            >
+              <Switch
+                checkedText={t['edit.form.content.type.richText']}
+                uncheckedText={t['edit.form.content.type.markdown']}
+                type="round"
+                checked={isMd}
+                onChange={(checked) => setIsMd(checked)}
+              />
+            </Form.Item>
+          </Grid.Col>
           </Grid.Row>
         </Card>
       </Form>
-      
+
       {
         isMd ?
           <MarkdownText textValue={textValue} setTextValue={setTextValue} />

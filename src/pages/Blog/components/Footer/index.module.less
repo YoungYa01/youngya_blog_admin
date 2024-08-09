@@ -2,14 +2,36 @@
   height: 30vh;
   background-color: #202529;
 
+  .count_container {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+
+    .white_color {
+      color: white;
+    }
+
+    .num_card {
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #20252950;
+      margin: 0 150px;
+    }
+  }
+
   .footer_content {
-    height: calc(100% - 50px);
+    height: calc(100% - 100px);
     display: flex;
     justify-content: center;
     align-items: center;
 
     .footer_content_left {
-      height: 200px;
+      height: 180px;
       flex: 1;
       display: flex;
       justify-content: center;
@@ -17,16 +39,19 @@
       flex-direction: row;
       color: #fff;
       font-size: 36px;
+      border-top: 1px solid #31363a;
       border-right: 1px solid #31363a;
       border-bottom: 1px solid #31363a;
     }
 
     .footer_content_right {
-      height: 200px;
+      height: 180px;
       flex: 1;
       display: flex;
       flex-direction: row;
+      justify-content: center;
       color: #fff;
+      border-top: 1px solid #31363a;
       border-bottom: 1px solid #31363a;
 
       .friend_chain {
@@ -65,10 +90,13 @@
       }
     }
   }
-  .footer_copyright{
+
+  .footer_copyright {
+    padding: 20px;
     display: flex;
     justify-content: space-around;
     align-items: center;
     gap: 50px;
+    background-color: #202529;
   }
 }
