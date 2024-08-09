@@ -9,12 +9,16 @@ const Header = (): JSX.Element => {
   const [visible, setVisible] = useState(false);
   const items = [
     { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
+    { name: 'Magic Board', path: '/magic-board' },
     { name: 'Article', path: '/articles' },
-    { name: 'Contact', path: '/contact' }
+    { name: 'Login', path: '/login' }
   ];
 
   const handleItemClick = (path: string) => {
+    if(path === '/login'){
+      history.push(`${path}`);
+      return;
+    }
     history.push(`/blog${path}`);
   };
   return (

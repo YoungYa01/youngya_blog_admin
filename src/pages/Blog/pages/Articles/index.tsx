@@ -32,11 +32,8 @@ export default () => {
     }, [])
 
     return (
-        <>
-            <h1>
-                Articles
-            </h1>
-            <List>
+        <div style={{textAlign: 'center'}}>
+            <List style={{ width: '870px', margin: '0 auto', border: '1px solid #e8e8e8' }}>
                 {data.map((item, index) => (
                     <List.Item key={item.id}>
                         <List.Item.Meta
@@ -65,6 +62,6 @@ export default () => {
                     </List.Item>
                 ))}
             </List>
-        </>
+        </div>
     )
 }
