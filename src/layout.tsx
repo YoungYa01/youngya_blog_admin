@@ -12,7 +12,7 @@ import {
   IconTags,
   IconStorage,
   IconMindMapping,
-  IconPalette
+  IconPalette, IconOrderedList
 } from '@arco-design/web-react/icon';
 import { useSelector } from 'react-redux';
 import qs from 'query-string';
@@ -51,6 +51,8 @@ function getIconFromKey(key) {
       return <IconStorage className={styles.icon} />;
     case 'drawingBoard':
       return <IconPalette className={styles.icon} />;
+    case 'flowTable':
+      return <IconOrderedList className={styles.icon} />;
     default:
       return <div className={styles['icon-empty']} />;
   }

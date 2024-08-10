@@ -17,3 +17,12 @@ export const accessReq = () => request.post('/api/flow/access');
 export const getAccessCountReq = () => request.get('/api/flow/access/count');
 // 获取点赞数
 export const getPraiseCountReq = () => request.get('/api/flow/praise/count');
+
+// 获取访问点赞列表
+export const getFlowTableReq = (
+  {
+    page,
+    pageSize,
+    type = ''
+  }
+) => request.get(`/api/flow/all?page=${page}&pageSize=${pageSize}&type=${type}`);

@@ -10,6 +10,7 @@ const i18n = {
     'menu.drawing.board':'Magic whiteboard',
     'menu.article.edit':'Edit Article',
     'menu.article.preview':'Index Article',
+    'menu.flow.table':'Visit Like Statistics',
 
 
 
@@ -61,6 +62,7 @@ const i18n = {
     'menu.drawing.board':'魔法白板',
     'menu.article.edit':'编辑文章',
     'menu.article.preview':'预览文章',
+    'menu.flow.table':'访问点赞统计',
 
 
 

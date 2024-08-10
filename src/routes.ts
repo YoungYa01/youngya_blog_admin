@@ -57,7 +57,11 @@ export const routes: IRoute[] = [
   {
     name:'menu.drawing.board',
     key:'drawingBoard',
-  }
+  },
+  {
+    name:'menu.flow.table',
+    key:'flowTable',
+  },
 ];
 
 export const getName = (path: string, routes) => {

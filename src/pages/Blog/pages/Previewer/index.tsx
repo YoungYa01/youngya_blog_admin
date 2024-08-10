@@ -43,7 +43,7 @@ const Previewer = () => {
         <Button icon={<IconReply style={{ fontSize: '1.5em' }} />} onClick={() => history.goBack()}></Button>
         <h1 style={{ textAlign: 'center' }}>
           {data.titleZH}<br />
-          <i>{data.titleEN}</i>
+          <i style={{fontSize: '0.6em',fontWeight: 500}}>{data.titleEN}</i>
         </h1>
 
         <Dropdown droplist={
@@ -68,21 +68,14 @@ const Previewer = () => {
         height: '450px',
         overflow: 'hidden',
         margin: '0 auto',
-        position: 'absolute',
+        position: 'sticky',
         top: '0',
         zIndex: '-1'
       }}>
         <img src={`${import.meta.env.VITE_BASE_URL}${data.cover}`} alt="" width={'100%'} />
       </div>
       <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1.5em',
-          position: 'absolute',
-          top: '50%',
-          left: 100,
-        }}
+        className={'tags-list'}
       >
         {
           data.tags.map((tag, index) => (
@@ -98,7 +91,8 @@ const Previewer = () => {
         editorId={id}
         modelValue={textValue}
         previewTheme={previewTheme}
-        style={{ width: '50vw', margin: '0 auto', border: '2px solid #eee'}}
+        className={'the_md_previewer'}
+        style={{ }}
       />
       <div style={{
         width: '50vw',
@@ -117,6 +111,8 @@ const Previewer = () => {
           padding: '1.5em',
           borderRadius: '1em',
           border: '1px solid #eee',
+          height: '70vh',
+          overflow: 'scroll',
         }}
       />
     </>

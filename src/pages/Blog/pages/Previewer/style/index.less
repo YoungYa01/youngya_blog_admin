@@ -1,12 +1,14 @@
 #preview-only-preview {
   figure {
-    display: flex!important;
-    justify-content: center!important;
+    display: flex !important;
+    justify-content: center !important;
+
     img {
       display: block !important;
       margin: 25px auto !important;
     }
   }
+
   img {
     display: block !important;
     margin: 25px auto !important;
@@ -19,6 +21,9 @@
   right: 5rem;
   text-align: left;
   font-size: 16px;
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .theme-select {
@@ -28,5 +33,26 @@
 
   &:hover .theme-select-icon {
     transform: rotate(180deg);
+  }
+}
+
+.tags-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+  position: absolute;
+  top: 50%;
+  left: 100px;
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.the_md_previewer{
+  width: 50vw;
+  margin: 0 auto;
+  border: 2px solid #eee;
+  @media (max-width: 768px) {
+    width: 100vw;
   }
 }
