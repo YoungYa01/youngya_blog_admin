@@ -211,6 +211,7 @@ const FlowTable = (): JSX.Element => {
         />
         <Pagination
           showTotal
+          sizeCanChange
           total={total}
           current={page}
           pageSize={pageSize}

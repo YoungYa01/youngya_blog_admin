@@ -1,41 +1,36 @@
 import React from 'react';
-import { Grid, Space } from '@arco-design/web-react';
-import Overview from './overview';
-import PopularContents from './popular-contents';
-import ContentPercentage from './content-percentage';
-import Shortcuts from './shortcuts';
-import Announcement from './announcement';
-import Carousel from './carousel';
-import Docs from './docs';
-import styles from './style/index.module.less';
-import './mock';
+import { Carousel, Space } from '@arco-design/web-react';
+import Overview from '@/pages/dashboard/workplace/overview';
+import ContentPercentage from '@/pages/dashboard/workplace/content-percentage';
+import styles from '@/pages/dashboard/workplace/style/index.module.less';
+import Shortcuts from '@/pages/dashboard/workplace/shortcuts';
+import Announcement from '@/pages/dashboard/workplace/announcement';
 
-const { Row, Col } = Grid;
 
-const gutter = 16;
+const Workplace = () => {
 
-function Workplace() {
   return (
-    <Space size={16} align="start">
-      <Space size={16} direction="vertical">
+    <div style={{ width: '100%', display: 'flex', gap: 12 }}>
+      <Space
+        direction={'vertical'}
+        style={{ width: '100%' }}
+      >
         <Overview />
-        <Row gutter={gutter}>
-          <Col span={12}>
-            <PopularContents />
-          </Col>
-          <Col span={12}>
-            <ContentPercentage />
-          </Col>
-        </Row>
+        <ContentPercentage />
       </Space>
-      <Space className={styles.right} size={16} direction="vertical">
+      <Space direction={'vertical'}>
         <Shortcuts />
-        <Carousel />
         <Announcement />
-        <Docs />
       </Space>
-    </Space>
+      {/*<Space size={24} align="start">*/}
+      {/*  <Space size={24} direction="vertical">*/}
+      {/*  </Space>*/}
+      {/*  <Space className={styles.right} size={24} direction="vertical">*/}
+      {/*    /!*<Docs />*!/*/}
+      {/*  </Space>*/}
+      {/*</Space>*/}
+    </div>
   );
-}
+};
 
 export default Workplace;

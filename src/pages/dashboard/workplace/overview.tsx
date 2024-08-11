@@ -58,26 +58,11 @@ type DataType = {
 
 function Overview() {
   const [data, setData] = useState<DataType>({});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const t = useLocale(locale);
 
   const userInfo = useSelector((state: any) => state.userInfo || {});
 
-  const fetchData = () => {
-    setLoading(true);
-    axios
-      .get('/api/workplace/overview-content')
-      .then((res) => {
-        setData(res.data);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   return (
     <Card>
@@ -91,7 +76,7 @@ function Overview() {
           <StatisticItem
             icon={<IconCalendar />}
             title={t['workplace.totalOnlyData']}
-            count={data.allContents}
+            count={99}
             loading={loading}
             unit={t['workplace.pecs']}
           />
@@ -101,7 +86,7 @@ function Overview() {
           <StatisticItem
             icon={<IconContent />}
             title={t['workplace.contentInMarket']}
-            count={data.liveContents}
+            count={66}
             loading={loading}
             unit={t['workplace.pecs']}
           />
@@ -111,7 +96,7 @@ function Overview() {
           <StatisticItem
             icon={<IconComments />}
             title={t['workplace.comments']}
-            count={data.increaseComments}
+            count={996}
             loading={loading}
             unit={t['workplace.pecs']}
           />
@@ -123,7 +108,7 @@ function Overview() {
             title={t['workplace.growth']}
             count={
               <span>
-                {data.growthRate}{' '}
+                {21}{' '}
                 <IconCaretUp
                   style={{ fontSize: 18, color: 'rgb(var(--green-6))' }}
                 />
@@ -134,21 +119,21 @@ function Overview() {
         </Col>
       </Row>
       <Divider />
-      <div>
-        <div className={styles.ctw}>
-          <Typography.Paragraph
-            className={styles['chart-title']}
-            style={{ marginBottom: 0 }}
-          >
-            {t['workplace.contentData']}
-            <span className={styles['chart-sub-title']}>
-              ({t['workplace.1year']})
-            </span>
-          </Typography.Paragraph>
-          <Link>{t['workplace.seeMore']}</Link>
-        </div>
-        <OverviewAreaLine data={data.chartData} loading={loading} />
-      </div>
+      {/*<div>*/}
+      {/*  <div className={styles.ctw}>*/}
+      {/*    <Typography.Paragraph*/}
+      {/*      className={styles['chart-title']}*/}
+      {/*      style={{ marginBottom: 0 }}*/}
+      {/*    >*/}
+      {/*      {t['workplace.contentData']}*/}
+      {/*      <span className={styles['chart-sub-title']}>*/}
+      {/*        ({t['workplace.1year']})*/}
+      {/*      </span>*/}
+      {/*    </Typography.Paragraph>*/}
+      {/*    <Link>{t['workplace.seeMore']}</Link>*/}
+      {/*  </div>*/}
+      {/*  <OverviewAreaLine data={data.chartData} loading={loading} />*/}
+      {/*</div>*/}
     </Card>
   );
 }

@@ -21,6 +21,13 @@
   right: 5rem;
   text-align: left;
   font-size: 16px;
+  width: 200px;
+  background: #eeeeee80;
+  padding: 1.5em;
+  border-radius: 1em;
+  border: 1px solid #eee;
+  height: 70vh;
+  overflow: scroll;
   @media (max-width: 768px) {
     display: none;
   }
@@ -48,11 +55,25 @@
   }
 }
 
-.the_md_previewer{
+.the_md_previewer {
   width: 50vw;
   margin: 0 auto;
   border: 2px solid #eee;
   @media (max-width: 768px) {
     width: 100vw;
+  }
+}
+
+.md_preview_bg_img {
+  text-align: center;
+  width: 100vw;
+  height: 450px;
+  overflow: hidden;
+  margin: 0 auto;
+  position: sticky;
+  top: 0;
+  z-index: -1;
+  @media (max-width: 768px) {
+    height: 150px !important;
   }
 }

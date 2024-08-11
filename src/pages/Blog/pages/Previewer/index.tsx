@@ -4,9 +4,10 @@ import { EditStateType } from '@/types';
 import { useHistory } from 'react-router';
 import 'md-editor-rt/lib/style.css';
 import { IconDown, IconReply } from '@arco-design/web-react/icon';
-import { Button, Dropdown, Menu, Tag } from '@arco-design/web-react';
+import { Affix, BackTop, Button, Dropdown, Menu, Tag } from '@arco-design/web-react';
 import './style/index.less';
 import { getRandomColor } from '@/utils/randomColor';
+import AffixDrawer from '@/pages/Blog/components/AffixDrawer';
 
 const setMDTheme = (v) => localStorage.setItem('md-theme', v);
 const getMDTheme = localStorage.getItem('md-theme');
@@ -40,10 +41,12 @@ const Previewer = () => {
   return (
     <>
       <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '1em' }}>
-        <Button icon={<IconReply style={{ fontSize: '1.5em' }} />} onClick={() => history.goBack()}></Button>
+        <Button
+          icon={<IconReply style={{ fontSize: '1.5em' }} />}
+          onClick={() => history.goBack()}></Button>
         <h1 style={{ textAlign: 'center' }}>
           {data.titleZH}<br />
-          <i style={{fontSize: '0.6em',fontWeight: 500}}>{data.titleEN}</i>
+          <i style={{ fontSize: '0.6em', fontWeight: 500 }}>{data.titleEN}</i>
         </h1>
 
         <Dropdown droplist={
@@ -62,16 +65,7 @@ const Previewer = () => {
         </Dropdown>
       </div>
 
-      <div style={{
-        textAlign: 'center',
-        width: '100vw',
-        height: '450px',
-        overflow: 'hidden',
-        margin: '0 auto',
-        position: 'sticky',
-        top: '0',
-        zIndex: '-1'
-      }}>
+      <div className={'md_preview_bg_img'}>
         <img src={`${import.meta.env.VITE_BASE_URL}${data.cover}`} alt="" width={'100%'} />
       </div>
       <div
@@ -81,7 +75,7 @@ const Previewer = () => {
           data.tags.map((tag, index) => (
             <div key={index}>
               <Tag color={getRandomColor()}>{index + 1}</Tag>
-              <div style={{display: 'inline-block', padding: '0.75em'}}></div>
+              <div style={{ display: 'inline-block', padding: '0.75em' }}></div>
               <Tag color={getRandomColor()} bordered>{tag.name}</Tag>
             </div>
           ))
@@ -92,7 +86,6 @@ const Previewer = () => {
         modelValue={textValue}
         previewTheme={previewTheme}
         className={'the_md_previewer'}
-        style={{ }}
       />
       <div style={{
         width: '50vw',
@@ -106,15 +99,21 @@ const Previewer = () => {
         editorId={id}
         scrollElement={scrollElement}
         className={'md_catalog_list'}
-        style={{
-          background: '#eeeeee80',
-          padding: '1.5em',
-          borderRadius: '1em',
-          border: '1px solid #eee',
-          height: '70vh',
-          overflow: 'scroll',
-        }}
       />
+      <AffixDrawer>
+        <>
+          <MdCatalog
+            editorId={id}
+            scrollElement={scrollElement}
+            style={{
+              width: '100%',
+              height: '95%',
+              overflow: 'auto',
+              padding: '0.5em'
+            }}
+          />
+        </>
+      </AffixDrawer>
     </>
   );
 };

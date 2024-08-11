@@ -11,6 +11,9 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 
   .article_list {
@@ -19,6 +22,22 @@
     overflow: scroll;
     margin: 30px auto;
     border: 1px solid #e8e8e8;
+    @media (max-width: 768px) {
+      width: 100%;
+      .article_item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .article_cover {
+          width: 100%;
+          position: relative!important;
+        }
+
+      }
+
+    }
 
     .article_item {
       position: relative;
@@ -52,6 +71,7 @@
       .article_desc {
         width: 450px;
         height: 100px;
+
       }
     }
   }
